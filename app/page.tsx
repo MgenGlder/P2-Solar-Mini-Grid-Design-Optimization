@@ -8,7 +8,12 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState({pvSize: '0', batterySize: '0', completed: false});
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoginVisible, setIsLoginVisible] = useState(false); 
+  const fakeEmail = "email@email.com";
+  const fakePassword = "password";
+
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
@@ -33,6 +38,30 @@ export default function Home() {
         completed: false
       })
   }
+  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const email = (formData.get("email") as string).trim();
+    const password = (formData.get("password") as string).trim();
+
+    if (email === fakeEmail && password === fakePassword) {
+      console.log(email)
+      console.log(password)
+      setIsAuthenticated(true);
+      setIsLoginVisible(false);
+      setActiveTab('simulation');
+    } else {
+      alert("Incorrect email or password. Please try again.");
+    }
+  }
+  function handleSimulationClick() {
+    if (!isAuthenticated) {
+      setIsLoginVisible(true);
+    } else {
+      setActiveTab('simulation');
+    }
+  }
   
 
   useEffect(function mount() {
@@ -52,7 +81,7 @@ export default function Home() {
           </button>
           <button 
             className={`tab-button ${activeTab === 'simulation' ? 'active' : ''}`} 
-            onClick={() => setActiveTab('simulation')}
+            onClick={handleSimulationClick}
           >
             Mini-Grid Simulation
           </button>
@@ -77,10 +106,8 @@ export default function Home() {
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick">
                 <h2 className="font-bold">Team Members and Roles:</h2>
                 <ul className="list-inside list-disc mb-4">
-                  <li>Jessica - Data Engineer - Data analytics and data engineering</li>
                   <li>Earth - Back-End Engineer -  Python, SQL, Java, JS, Gen AI Integration</li>
                   <li>Pranav - Front-End Engineer - Angular, React, JavaScript, Java, Python, C++, HTML, AWS</li>
-                  <li>Joseph - Back-End Engineer - JavaScript, Java, Python, C++, AWS, MySQL</li>
                   <li>Kunle - Front-End Engineer - Python, Go, Java, Javascript, React</li>
                 </ul>
               </section>
@@ -114,7 +141,24 @@ export default function Home() {
             </div>
           )}
 
-          {activeTab === 'simulation' && (
+          {isLoginVisible && !isAuthenticated && (
+            <div className="login-container">
+              <h2>Login</h2>
+              <form onSubmit={handleLogin} className="login-form">
+                <div className="form-group">
+                  <label htmlFor="email">Email:</label>
+                  <input type="text" id="email" name="email" required placeholder="Enter email" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input type="password" id="password" name="password" required placeholder="Enter password" />
+                </div>
+                <button type="submit" className="submit-button">Login</button>
+              </form>
+            </div>
+          )}
+
+          {activeTab === 'simulation' && isAuthenticated && (
           <div className="form-container text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick">
             <Tooltip id="form-tooltip" />
             <h2>Mini-Grid Simulation Parameters</h2>
@@ -260,6 +304,24 @@ export default function Home() {
 
       .tab-button:hover {
         background-color: #eaeaea;
+      }
+
+      .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
       }
 
       .form-container {
