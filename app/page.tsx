@@ -89,10 +89,10 @@ export default function Home() {
       </div>
 
       {/* Tab Content */}
-      <div className={`${state ? '' : 'grid'} grid-rows-[20px_1fr_20px] min-h-screen p-8 pb-10 sm:p-10 font-[family-name:var(--font-geist-sans)]`}>
-        <main className={`${state ? '' : 'flex'} flex-col items-center gap-8`}>
+        <div className={`${state ? '' : 'grid'} grid-rows-[20px_1fr_20px] min-h-screen p-8 pb-10 sm:p-10 font-[family-name:var(--font-geist-sans)]`}>
+          <main className={`${state ? '' : 'flex'} flex-col items-center gap-8`}>
 
-          {activeTab === 'home' && (
+          {activeTab === 'home' && !isLoginVisible && (
             <div className="content-container">
               <h1><a href="https://github.com/MgenGlder/P2-Solar-Mini-Grid-Design-Optimization">P2 Solar Mini-Grid: Design Optimization</a></h1>
 
@@ -140,7 +140,6 @@ export default function Home() {
 
             </div>
           )}
-
           {isLoginVisible && !isAuthenticated && (
             <div className="login-container">
               <h2>Login</h2>
