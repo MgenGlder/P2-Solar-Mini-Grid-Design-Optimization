@@ -96,9 +96,11 @@ export default function Home() {
             <div className="content-container">
               <h1><a href="https://github.com/MgenGlder/P2-Solar-Mini-Grid-Design-Optimization">P2 Solar Mini-Grid: Design Optimization</a></h1>
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick w-full">
-                <p className="mb-4">
-                  <h1>👋🏾 Hey there! We&apos;d really appreciate it if you took the time to complete our <a href="https://forms.office.com/r/LSdWtYARMs"><b>🗳️ SURVEY 🗳️</b></a> and provide us some feedback! Thank you 🙇🏽‍♂️</h1>
-                </p>
+                <h1>
+                  <p className="mb-4">
+                    👋🏾 Hey there! We&apos;d really appreciate it if you took the time to complete our <a href="https://forms.office.com/r/LSdWtYARMs"><b className="survey-link">🗳️ SURVEY 🗳️</b></a> and provide us some feedback! Thank you 🙇🏽‍♂️
+                  </p>
+                </h1>
               </section>
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick w-full">
                 <h2 className="font-bold">Description:</h2>

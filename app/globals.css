@@ -13,11 +13,20 @@
     border-radius: 8px;
 }
 
+.tab-button {
+  border-radius: 40px;
+}
+
+.survey-link {
+  color: #007bff;
+  text-decoration: underline;
+}
+
 .sticky-header {
   position: sticky;
   top: 0;
   height: 60px;
-  padding: 20px 50px;
+  padding: 0px 0px !important;
   background: #555;
   color: #f1f1f1;
 }
