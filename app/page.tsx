@@ -183,74 +183,92 @@ export default function Home() {
               </div>
             ) : (
               <form className="simulation-form" onSubmit={handleSubmit}>
-                {/* Name */}
+                <p>PV</p>
+                {/* Array Size */}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Your first and last name. Ex: John Smith">
-                    <label htmlFor="name">Name</label>
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the PV Array. Ex: 118.0 kW">
+                    <label htmlFor="name">Array Size</label>
                   </a>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    placeholder="Enter Name"
+                    placeholder="Enter Array Size"
                     required
                   />
                 </div>
         
-                {/* Distribution Length */}
+                {/* Array Losses */}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The square kilometers of the proposed grid area, as a whole number. Ex: 20">
-                    <label htmlFor="distributionLength">Distribution Length</label>
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The array losses of the PV, measured as a percent.  Ex: 11.42 NOTE: 11.42% is what PVWatts recommends if you take out availability losses.">
+                    <label htmlFor="arrayLosses">Array Losses</label>
                   </a>
                   <input
                     type="number"
-                    id="distributionLength"
-                    name="distributionLength"
-                    placeholder="Enter Distribution Length"
+                    id="arrayLosses"
+                    name="arrayLosses"
+                    placeholder="Enter Array Losses"
                     required
                   />
                 </div>
-        
-                {/* Transmission Length */}
+                <p>Battery</p>
+                {/* Capacity */}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The average kilometers distance of the battery to the solar panel, as a whole number. Ex: 20">
-                    <label htmlFor="transmissionLength">Transmission Length</label>
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The capacity of the battery measured in kWh, as a number with a single decimal. Ex: 510.0">
+                    <label htmlFor="batteryCapacity">Capacity (with correct C-value)</label>
                   </a>
                   <input
                     type="number"
-                    id="transmissionLength"
-                    name="transmissionLength"
-                    placeholder="Enter Transmission Length"
+                    id="batteryCapacity"
+                    name="batteryCapacity"
+                    placeholder="Enter Battery Capacity"
                     required
                   />
                 </div>
-        
-                {/* Number of Customers */}
+
+                {/* Minimum Allowable SOC */}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The number of customers that will utilize the proposed grid, as a whole number. Ex: 500">
-                    <label htmlFor="numberOfCustomers">Number of Customers</label>
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Minimum allowable SOC, measured as a percent. Ex: 15">
+                    <label htmlFor="batteryMinimumAllowableSOC">Minimum Allowable SOC</label>
                   </a>
                   <input
                     type="number"
-                    id="numberOfCustomers"
-                    name="numberOfCustomers"
-                    placeholder="Enter Number of Customers"
+                    id="batteryMinimumAllowableSOC"
+                    name="batteryMinimumAllowableSOC"
+                    placeholder="Enter Minimum Allowable SOC"
                     required
                   />
                 </div>
-        
-                {/* Safety Margin */}
+
+                <p>Power Conversion</p>
+                {/* Battery Inverter Power */}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The safety margin of error of the estimated budget, i.e. how much extra unintended usage to account for. as a whole percentage. Ex. 20">
-                    <label htmlFor="safetyMargin">Safety Margin on entire budge(in %)</label>
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Battery inverter power, measured in kWh, as a number with a single decimal. Ex. 20.0">
+                    <label htmlFor="batteryInverterPower"></label>
                   </a>
                   <input
                     type="number"
-                    id="safetyMargin"
-                    name="safetyMargin"
+                    id="batteryInverterPower"
+                    name="batteryInverterPower"
                     min="0"
                     max="100"
-                    placeholder="Enter Safety Margin"
+                    placeholder="Enter Battery Inverter Power"
+                    required
+                  />
+                </div>
+
+                {/* Solar inverter/CC Power */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Solar inverter/CC Power, measured in kWh, as a number with a single decimal. Ex. 20.0">
+                    <label htmlFor="solarInterverCCPower"></label>
+                  </a>
+                  <input
+                    type="number"
+                    id="solarInterverCCPower"
+                    name="solarInterverCCPower"
+                    min="0"
+                    max="100"
+                    placeholder="Enter Battery Inverter/CC Power"
                     required
                   />
                 </div>
