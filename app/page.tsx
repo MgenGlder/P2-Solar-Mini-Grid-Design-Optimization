@@ -97,7 +97,7 @@ export default function Home() {
               <h1><a href="https://github.com/MgenGlder/P2-Solar-Mini-Grid-Design-Optimization">P2 Solar Mini-Grid: Design Optimization</a></h1>
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick w-full">
                 <p className="mb-4">
-                  <h1>👋🏾 Hey there! We'd really appreciate it if you took the time to complete our <a href="https://forms.office.com/r/LSdWtYARMs"><b>🗳️ SURVEY 🗳️</b></a> and provide us some feedback! Thank you 🙇🏽‍♂️</h1>
+                  <h1>👋🏾 Hey there! We&apos;d really appreciate it if you took the time to complete our <a href="https://forms.office.com/r/LSdWtYARMs"><b>🗳️ SURVEY 🗳️</b></a> and provide us some feedback! Thank you 🙇🏽‍♂️</h1>
                 </p>
               </section>
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick w-full">
