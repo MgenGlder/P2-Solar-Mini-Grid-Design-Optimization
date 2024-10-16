@@ -16,6 +16,12 @@
 .tab-button {
   border-radius: 40px;
 }
+
+.survey-link {
+  color: #007bff;
+  text-decoration: underline;
+}
+
 .sticky-header {
   position: sticky;
   top: 0;

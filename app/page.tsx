@@ -98,7 +98,7 @@ export default function Home() {
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick w-full">
                 <h1>
                   <p className="mb-4">
-                    👋🏾 Hey there! We&apos;d really appreciate it if you took the time to complete our <a href="https://forms.office.com/r/LSdWtYARMs"><b>🗳️ SURVEY 🗳️</b></a> and provide us some feedback! Thank you 🙇🏽‍♂️
+                    👋🏾 Hey there! We&apos;d really appreciate it if you took the time to complete our <a href="https://forms.office.com/r/LSdWtYARMs"><b className="survey-link">🗳️ SURVEY 🗳️</b></a> and provide us some feedback! Thank you 🙇🏽‍♂️
                   </p>
                 </h1>
               </section>
