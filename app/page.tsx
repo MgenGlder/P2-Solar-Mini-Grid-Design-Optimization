@@ -208,6 +208,8 @@ export default function Home() {
                     id="arrayLosses"
                     name="arrayLosses"
                     placeholder="Enter Array Losses"
+                    min="0"
+                    max="100"
                     required
                   />
                 </div>
@@ -244,14 +246,12 @@ export default function Home() {
                 {/* Battery Inverter Power */}
                 <div className="form-group">
                   <a data-tooltip-id="form-tooltip" data-tooltip-content="Battery inverter power, measured in kWh, as a number with a single decimal. Ex. 20.0">
-                    <label htmlFor="batteryInverterPower"></label>
+                    <label htmlFor="batteryInverterPower">Battery Inverter Power</label>
                   </a>
                   <input
                     type="number"
                     id="batteryInverterPower"
                     name="batteryInverterPower"
-                    min="0"
-                    max="100"
                     placeholder="Enter Battery Inverter Power"
                     required
                   />
@@ -260,19 +260,148 @@ export default function Home() {
                 {/* Solar inverter/CC Power */}
                 <div className="form-group">
                   <a data-tooltip-id="form-tooltip" data-tooltip-content="Solar inverter/CC Power, measured in kWh, as a number with a single decimal. Ex. 20.0">
-                    <label htmlFor="solarInterverCCPower"></label>
+                    <label htmlFor="solarInterverCCPower">Solar Inverter/CC Power</label>
                   </a>
                   <input
                     type="number"
                     id="solarInterverCCPower"
                     name="solarInterverCCPower"
-                    min="0"
-                    max="100"
                     placeholder="Enter Battery Inverter/CC Power"
                     required
                   />
                 </div>
-        
+
+                {/* Battery charging limit */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Battery charging limit, measured in kWh, as a number with a single decimal. Ex. 20.0">
+                    <label htmlFor="batteryChargingLimit">Battery Charging Limit</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryChargingLimit"
+                    name="batteryChargingLimit"
+                    placeholder="Enter Battery Charging Limit"
+                    required
+                  />
+                </div>
+
+                <p>Generator</p>
+                {/* Size */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Generator size, measured in kWh, as a number with a single decimal. Ex. 20.0">
+                    <label htmlFor="generatorSize">Size</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="generatorSize"
+                    name="generatorSize"
+                    placeholder="Enter Generator Size"
+                    required
+                  />
+                </div>
+
+                <p>System</p>
+                {/* Distributed Losses */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Distributed losses, measured as a percent. Ex. 20">
+                    <label htmlFor="systemDistributedLosses">Distributed Losses</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="systemDistributedLosses"
+                    name="systemDistributedLosses"
+                    placeholder="Enter Distributed Losses"
+                    required
+                  />
+                </div>
+
+                {/* PV Coupling */}
+                <div className="form-group">
+                    <a data-tooltip-id="form-tooltip" data-tooltip-content="PV Coupling of the system, choose one of the allowed options.">
+                      <label htmlFor="systemPVCoupling">PV Coupling</label>
+                    </a>
+                    <input
+                      type="number"
+                      id="systemDistributedLosses"
+                      name="systemDistributedLosses"
+                      placeholder="Enter Distributed Losses"
+                      disabled={true}
+                      required
+                    />
+                </div>
+
+                {/* Closest Location */}
+                <div className="form-group">
+                    <a data-tooltip-id="form-tooltip" data-tooltip-content="Closest location of the system, as a whole number choose one of the allowed options.">
+                      <label htmlFor="systemClosestLocation">Closest Location</label>
+                    </a>
+                    <input
+                      type="number"
+                      id="systemClosestLocation"
+                      name="systemClosestLocation"
+                      placeholder="Enter Closest Location"
+                      disabled={true}
+                      required
+                    />
+                </div>
+
+                <p>Customers</p>
+                {/* Residential Customers */}
+                <div className="form-group">
+                    <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of residential customers, measured as a whole number. Ex: 20">
+                      <label htmlFor="customersResidential">Residential Customers</label>
+                    </a>
+                    <input
+                      type="number"
+                      id="customersResidential"
+                      name="customersResidential"
+                      placeholder="Enter Number Of Residential Customers"
+                      required
+                    />
+                </div>
+
+                {/* Commercial Customers */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of commercial customers, measured as a whole number. Ex: 20">
+                    <label htmlFor="customersCommercial">Commercial Customers</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="customersCommercial"
+                    name="customersCommercial"
+                    placeholder="Enter Number Of Commercial Customers"
+                    required
+                  />
+                </div>
+
+                {/* Other Customers */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of other customers (neither residential nor commercial), measured as a whole number. Ex: 20">
+                    <label htmlFor="customersOther">Other Customers</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="customersOther"
+                    name="customersOther"
+                    placeholder="Enter Number Of Other Customers"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total customers, measured as a whole number. Ex: 20">
+                    <label htmlFor="customersTotal">Total Customers</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="customersTotal"
+                    name="customersTotal"
+                    placeholder="Total customers"
+                    disabled={true}
+                    required
+                  />
+                </div>
+
                 {/* Submit Button */}
                 <button type="submit" className="submit-button">Submit</button>
                 
