@@ -169,6 +169,12 @@ export default function Home() {
             <h2>Mini-Grid Simulation Parameters</h2>
             <p>Note: Hover over the name of the field for more information!</p>
             <br/>
+            <div style={{display: "inline-block"}}>
+              Sizing Params
+            </div>
+            <div style={{display: "inline-block"}}>
+              Cost Tracking Params
+            </div>
             {isLoading ? (
               <div className="loading-animation">
                 <p>Retrieving results...</p>
