@@ -169,12 +169,12 @@ export default function Home() {
             <h2>Mini-Grid Simulation Parameters</h2>
             <p>Note: Hover over the name of the field for more information!</p>
             <br/>
-            <div style={{display: "inline-block"}}>
+            <button className="tab-button" style={{display: "inline-block", marginRight: "20px"}}>
               Sizing Params
-            </div>
-            <div style={{display: "inline-block"}}>
+            </button>
+            <button className="tab-button" style={{display: "inline-block"}}>
               Cost Tracking Params
-            </div>
+            </button>
             {isLoading ? (
               <div className="loading-animation">
                 <p>Retrieving results...</p>
@@ -189,6 +189,7 @@ export default function Home() {
               </div>
             ) : (
               <form className="simulation-form" onSubmit={handleSubmit}>
+                <br/>
                 <p>PV</p>
                 {/* Array Size */}
                 <div className="form-group">
