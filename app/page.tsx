@@ -445,30 +445,32 @@ export default function Home() {
 
                 {/* PV Section */}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the PV Array. Ex: 48.6 kW">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the PV Array.">
                     <label htmlFor="pvSize">PV Size</label>
                   </a>
                   <input
                     type="number"
                     id="pvSize"
                     name="pvSize"
-                    placeholder="Enter PV Size"
+                    placeholder="PV Size"
                     value={48.6}
+                    disabled={true}
                     required
                   />
                 </div>
 
                 <p>Battery Section</p>
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the battery in kWh, such as 88.8 kWh">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the battery in kWh">
                     <label htmlFor="batterySize">Battery Size</label>
                   </a>
                   <input
                     type="number"
                     id="batterySize"
                     name="batterySize"
-                    placeholder="Enter Battery Size"
+                    placeholder="Battery Size"
                     value={88.8}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -660,8 +662,9 @@ export default function Home() {
                     type="number"
                     id="siteKWh"
                     name="siteKWh"
-                    placeholder="Enter Total kWh for this Site"
+                    placeholder="Total kWh for this Site"
                     value={88.8}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -675,8 +678,9 @@ export default function Home() {
                     type="number"
                     id="batteryCost"
                     name="batteryCost"
-                    placeholder="Enter Total Battery Cost"
+                    placeholder="Total Battery Cost"
                     value={26400}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -723,8 +727,9 @@ export default function Home() {
                     type="number"
                     id="batteryShippingCost"
                     name="batteryShippingCost"
-                    placeholder="Enter Total Battery Shipping Cost"
+                    placeholder="Total Battery Shipping Cost"
                     value={532.8}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -769,8 +774,9 @@ export default function Home() {
                     type="number"
                     id="batteryInspectionFee"
                     name="batteryInspectionFee"
-                    placeholder="Enter Battery Inspection Fee"
+                    placeholder="Battery Inspection Fee"
                     value={37500}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -784,8 +790,9 @@ export default function Home() {
                     type="number"
                     id="batteryPortFees"
                     name="batteryPortFees"
-                    placeholder="Enter Battery Port Fees"
+                    placeholder="Battery Port Fees"
                     value={212280}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -799,8 +806,9 @@ export default function Home() {
                     type="number"
                     id="batteryClearingAgentFees"
                     name="batteryClearingAgentFees"
-                    placeholder="Enter Battery Clearing Agent Fees"
+                    placeholder="Battery Clearing Agent Fees"
                     value={33000}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -829,8 +837,9 @@ export default function Home() {
                     type="number"
                     id="batteryNonVATImportTaxes"
                     name="batteryNonVATImportTaxes"
-                    placeholder="Enter Non-VAT Import Taxes"
+                    placeholder="Non-VAT Import Taxes"
                     value={223307}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -892,8 +901,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterCost"
                     name="batteryInverterCost"
-                    placeholder="Enter Total Battery Inverter Cost"
+                    placeholder="Total Battery Inverter Cost"
                     value={2600}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -940,8 +950,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterShippingCost"
                     name="batteryInverterShippingCost"
-                    placeholder="Enter Total Shipping Cost"
+                    placeholder="Total Shipping Cost"
                     value={540}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -973,8 +984,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterInspectionFees"
                     name="batteryInverterInspectionFees"
-                    placeholder="Enter Battery Inverter Inspection Fees"
+                    placeholder="Battery Inverter Inspection Fees"
                     value={37500}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -988,8 +1000,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterPortFees"
                     name="batteryInverterPortFees"
-                    placeholder="Enter Battery Inverter Port Fees"
+                    placeholder="Battery Inverter Port Fees"
                     value={212280}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1003,8 +1016,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterClearingAgentFees"
                     name="batteryInverterClearingAgentFees"
-                    placeholder="Enter Battery Inverter Clearing Agent Fees"
+                    placeholder="Battery Inverter Clearing Agent Fees"
                     value={33000}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1018,8 +1032,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterVAT"
                     name="batteryInverterVAT"
-                    placeholder="Enter Battery Inverter VAT"
+                    placeholder="Battery Inverter VAT"
                     value={0}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1033,8 +1048,9 @@ export default function Home() {
                     type="number"
                     id="batteryInverterNonVATImportTaxes"
                     name="batteryInverterNonVATImportTaxes"
-                    placeholder="Enter Non-VAT Import Taxes"
+                    placeholder="Non-VAT Import Taxes"
                     value={26035}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1256,8 +1272,9 @@ export default function Home() {
                     type="number"
                     id="totalCustomerMeterCount"
                     name="totalCustomerMeterCount"
-                    placeholder="Enter Total Customer Meter Count"
+                    placeholder="Total Customer Meter Count"
                     value={504}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1376,8 +1393,9 @@ export default function Home() {
                     type="number"
                     id="meterCostTotal"
                     name="meterCostTotal"
-                    placeholder="Enter Meter Cost Total"
+                    placeholder="Meter Cost Total"
                     value={21360}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1406,8 +1424,9 @@ export default function Home() {
                     type="number"
                     id="totalMeterShippingCost"
                     name="totalMeterShippingCost"
-                    placeholder="Enter Total Meter Shipping Cost"
+                    placeholder="Total Meter Shipping Cost"
                     value={2761.92}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1425,8 +1444,9 @@ export default function Home() {
                     type="number"
                     id="meterInspectionFee"
                     name="meterInspectionFee"
-                    placeholder="Enter Meter Inspection Fee"
+                    placeholder="Meter Inspection Fee"
                     value={37500}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1455,8 +1475,9 @@ export default function Home() {
                     type="number"
                     id="meterClearingAgentFees"
                     name="meterClearingAgentFees"
-                    placeholder="Enter Meter Clearing Agent Fees"
+                    placeholder="Meter Clearing Agent Fees"
                     value={21750}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1470,8 +1491,9 @@ export default function Home() {
                     type="number"
                     id="meterVAT"
                     name="meterVAT"
-                    placeholder="Enter Meter VAT"
+                    placeholder="Meter VAT"
                     value={512640}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1485,8 +1507,9 @@ export default function Home() {
                     type="number"
                     id="meterNonVATImportTaxes"
                     name="meterNonVATImportTaxes"
-                    placeholder="Enter Meter Non-VAT Import Taxes"
+                    placeholder="Meter Non-VAT Import Taxes"
                     value={177101}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1536,8 +1559,9 @@ export default function Home() {
                     type="number"
                     id="panelsPerString"
                     name="panelsPerString"
-                    placeholder="Enter Panels per String"
+                    placeholder="Panels per String"
                     value={3}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1551,8 +1575,9 @@ export default function Home() {
                     type="number"
                     id="numberOfPanels"
                     name="numberOfPanels"
-                    placeholder="Enter Number of Panels"
+                    placeholder="Number of Panels"
                     value={90}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1566,8 +1591,9 @@ export default function Home() {
                     type="number"
                     id="siteWattage"
                     name="siteWattage"
-                    placeholder="Enter Site Wattage"
+                    placeholder="Site Wattage"
                     value={48600}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1596,8 +1622,9 @@ export default function Home() {
                     type="number"
                     id="pricePerPanel"
                     name="pricePerPanel"
-                    placeholder="Enter Price per Panel"
+                    placeholder="Price per Panel"
                     value={147.42}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1611,8 +1638,9 @@ export default function Home() {
                     type="number"
                     id="pvCostForThisProject"
                     name="pvCostForThisProject"
-                    placeholder="Enter PV Cost"
+                    placeholder="PV Cost"
                     value={13267.8}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1644,8 +1672,9 @@ export default function Home() {
                     type="number"
                     id="totalShipmentSize"
                     name="totalShipmentSize"
-                    placeholder="Enter Total Shipment Size"
+                    placeholder="Total Shipment Size"
                     value={334.8}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1689,8 +1718,9 @@ export default function Home() {
                     type="number"
                     id="internationalTransportPerPanel"
                     name="internationalTransportPerPanel"
-                    placeholder="Enter International Transport per Panel"
+                    placeholder="International Transport per Panel"
                     value={6.45}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1704,8 +1734,9 @@ export default function Home() {
                     type="number"
                     id="pvShippingCostForThisProject"
                     name="pvShippingCostForThisProject"
-                    placeholder="Enter PV Shipping Cost"
+                    placeholder="PV Shipping Cost"
                     value={580.65}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1737,8 +1768,9 @@ export default function Home() {
                     type="number"
                     id="pvInspectionFee"
                     name="pvInspectionFee"
-                    placeholder="Enter PV Inspection Fee"
+                    placeholder="PV Inspection Fee"
                     value={5444}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1752,8 +1784,9 @@ export default function Home() {
                     type="number"
                     id="pvPortFees"
                     name="pvPortFees"
-                    placeholder="Enter PV Port Fees"
+                    placeholder="PV Port Fees"
                     value={30815}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1767,8 +1800,9 @@ export default function Home() {
                     type="number"
                     id="pvClearingAgentFees"
                     name="pvClearingAgentFees"
-                    placeholder="Enter PV Clearing Agent Fees"
+                    placeholder="PV Clearing Agent Fees"
                     value={4790}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1782,8 +1816,9 @@ export default function Home() {
                     type="number"
                     id="pvVAT"
                     name="pvVAT"
-                    placeholder="Enter PV VAT"
+                    placeholder="PV VAT"
                     value={0}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1797,8 +1832,9 @@ export default function Home() {
                     type="number"
                     id="pvNonVATImportTaxes"
                     name="pvNonVATImportTaxes"
-                    placeholder="Enter PV Non-VAT Import Taxes"
+                    placeholder="PV Non-VAT Import Taxes"
                     value={114821}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1860,8 +1896,9 @@ export default function Home() {
                     type="number"
                     id="pvInverterCost"
                     name="pvInverterCost"
-                    placeholder="Enter PV Inverter Cost"
+                    placeholder="PV Inverter Cost"
                     value={5888.8}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1922,8 +1959,9 @@ export default function Home() {
                     type="number"
                     id="rackingMaterialsCost"
                     name="rackingMaterialsCost"
-                    placeholder="Enter Racking Materials Cost"
+                    placeholder="Racking Materials Cost"
                     value={2430}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1937,8 +1975,9 @@ export default function Home() {
                     type="number"
                     id="rackingShippingCost"
                     name="rackingShippingCost"
-                    placeholder="Enter Racking Shipping Cost"
+                    placeholder="Racking Shipping Cost"
                     value={8000}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -1985,8 +2024,9 @@ export default function Home() {
                     type="number"
                     id="rackingInspectionFee"
                     name="rackingInspectionFee"
-                    placeholder="Enter Racking Inspection Fee"
+                    placeholder="Racking Inspection Fee"
                     value={37500}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2000,8 +2040,9 @@ export default function Home() {
                     type="number"
                     id="rackingPortFees"
                     name="rackingPortFees"
-                    placeholder="Enter Racking Port Fees"
+                    placeholder="Racking Port Fees"
                     value={212280}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2015,8 +2056,9 @@ export default function Home() {
                     type="number"
                     id="rackingClearingAgentFees"
                     name="rackingClearingAgentFees"
-                    placeholder="Enter Racking Clearing Agent Fees"
+                    placeholder="Racking Clearing Agent Fees"
                     value={21750}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2030,8 +2072,9 @@ export default function Home() {
                     type="number"
                     id="rackingVAT"
                     name="rackingVAT"
-                    placeholder="Enter Racking VAT"
+                    placeholder="Racking VAT"
                     value={314465}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2045,8 +2088,9 @@ export default function Home() {
                     type="number"
                     id="rackingNonVATImportTaxes"
                     name="rackingNonVATImportTaxes"
-                    placeholder="Enter Racking Non-VAT Import Taxes"
+                    placeholder="Racking Non-VAT Import Taxes"
                     value={479558}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2129,8 +2173,9 @@ export default function Home() {
                     type="number"
                     id="clearingAgentFees"
                     name="clearingAgentFees"
-                    placeholder="Enter Clearing Agent Fees"
+                    placeholder="Clearing Agent Fees"
                     value={21750}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2270,8 +2315,9 @@ export default function Home() {
                     type="number"
                     id="total20ftContainer"
                     name="total20ftContainer"
-                    placeholder="Enter Total for 20' Container"
+                    placeholder="Total for 20' Container"
                     value={212280}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2378,8 +2424,9 @@ export default function Home() {
                     type="number"
                     id="total40ftContainer"
                     name="total40ftContainer"
-                    placeholder="Enter Total for 40' Container"
+                    placeholder="Total for 40' Container"
                     value={70000}
+                    disabled={true}
                     required
                   />
                 </div>
@@ -2564,8 +2611,9 @@ export default function Home() {
                     type="number"
                     id="nemaApplicationFee"
                     name="nemaApplicationFee"
-                    placeholder="Enter NEMA Application Fee"
+                    placeholder="NEMA Application Fee"
                     value={31058}
+                    disabled={true}
                     required
                   />
                 </div>
