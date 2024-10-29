@@ -1985,7 +1985,7 @@ export default function Home() {
                 {/* Projects' Racking in Shipment */}
                 <div className="form-group">
                   <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of projects included in the racking shipment.">
-                    <label htmlFor="projectsInShipment">How Many Projects' Racking is in this Shipment?</label>
+                    <label htmlFor="projectsInShipment">How Many Projects Racking is in this Shipment?</label>
                   </a>
                   <input
                     type="number"
@@ -2214,7 +2214,7 @@ export default function Home() {
                 </div>
 
                 {/* 20' Container Costs */}
-                <p>20' Container</p>
+                <p>20 Container</p>
 
                 {/* THC/Handling/Cleaning Fee */}
                 <div className="form-group">
@@ -2309,7 +2309,7 @@ export default function Home() {
                 {/* Total for 20' Container */}
                 <div className="form-group">
                   <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost for the 20' container.">
-                    <label htmlFor="total20ftContainer">Total for 20' Container ($)</label>
+                    <label htmlFor="total20ftContainer">Total for 20 Container ($)</label>
                   </a>
                   <input
                     type="number"
@@ -2323,7 +2323,7 @@ export default function Home() {
                 </div>
 
                 {/* 40' Container Costs */}
-                <p>40' Container</p>
+                <p>40 Container</p>
 
                 {/* THC/Handling/Cleaning Fee for 40' Container */}
                 <div className="form-group">
@@ -2418,7 +2418,7 @@ export default function Home() {
                 {/* Total for 40' Container */}
                 <div className="form-group">
                   <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost for the 40' container.">
-                    <label htmlFor="total40ftContainer">Total for 40' Container ($)</label>
+                    <label htmlFor="total40ftContainer">Total for 40 Container ($)</label>
                   </a>
                   <input
                     type="number"
