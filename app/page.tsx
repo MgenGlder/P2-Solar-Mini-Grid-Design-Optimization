@@ -50,7 +50,6 @@ export default function Home() {
       console.log(password)
       setIsAuthenticated(true);
       setIsLoginVisible(false);
-      setActiveTab('simulation');
     } else {
       alert("Incorrect email or password. Please try again.");
     }
@@ -58,9 +57,15 @@ export default function Home() {
   function handleSimulationClick() {
     if (!isAuthenticated) {
       setIsLoginVisible(true);
-    } else {
-      setActiveTab('simulation');
+    } 
+    setActiveTab('simulation');
+    
+  }
+  function handleCostClick() {
+    if (!isAuthenticated) {
+      setIsLoginVisible(true);
     }
+    setActiveTab('price');
   }
   
 
@@ -84,6 +89,12 @@ export default function Home() {
             onClick={handleSimulationClick}
           >
             Mini-Grid Simulation
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'price' ? 'active' : ''}`} 
+            onClick={handleCostClick}
+          >
+            Cost-Tracking
           </button>
         </div>
       </div>
@@ -398,6 +409,2163 @@ export default function Home() {
                     name="customersTotal"
                     placeholder="Total customers"
                     disabled={true}
+                    required
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button type="submit" className="submit-button">Submit</button>
+                
+              </form>
+            )}
+          </div>
+          )}
+
+          {activeTab === 'price' && isAuthenticated && (
+          <div className="form-container text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick">
+            <Tooltip id="form-tooltip" />
+            <h2>Mini-Grid Simulation Parameters</h2>
+            <p>Note: Hover over the name of the field for more information!</p>
+            <br/>
+            {isLoading ? (
+              <div className="loading-animation">
+                <p>Retrieving results...</p>
+              </div>
+            ) : results.completed ? (
+              <div className="results">
+                <p>PV Size = {results.pvSize}</p>
+                <p>Battery Size = {results.batterySize}</p>
+                <form className="reset-form" onSubmit={handleResetB}>
+                  <button type="submit" className="submit-button">Reset</button>
+                </form>
+              </div>
+            ) : (
+              <form className="price-form" onSubmit={handleSubmit}>
+                <p>Template 50 kW Minigrid</p>
+
+                {/* PV Section */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the PV Array. Ex: 48.6 kW">
+                    <label htmlFor="pvSize">PV Size</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvSize"
+                    name="pvSize"
+                    placeholder="Enter PV Size"
+                    value={48.6}
+                    required
+                  />
+                </div>
+
+                <p>Battery Section</p>
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the battery in kWh, such as 88.8 kWh">
+                    <label htmlFor="batterySize">Battery Size</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batterySize"
+                    name="batterySize"
+                    placeholder="Enter Battery Size"
+                    value={88.8}
+                    required
+                  />
+                </div>
+
+                {/* Distribution */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Length of distribution lines in km.">
+                    <label htmlFor="distributionLength">Distribution Length (km)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="distributionLength"
+                    name="distributionLength"
+                    placeholder="Enter Distribution Length"
+                    value={9}
+                    required
+                  />
+                </div>
+
+                {/* Transmission */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Length of transmission lines in km.">
+                    <label htmlFor="transmissionLength">Transmission Length (km)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="transmissionLength"
+                    name="transmissionLength"
+                    placeholder="Enter Transmission Length"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Number of Customers */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of customers served by this project.">
+                    <label htmlFor="numCustomers">Number of Customers</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="numCustomers"
+                    name="numCustomers"
+                    placeholder="Enter Number of Customers"
+                    value={500}
+                    required
+                  />
+                </div>
+
+                {/* Safety Margin on Budget */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Safety margin applied to entire budget as a percentage.">
+                    <label htmlFor="safetyMargin">Safety Margin on Budget (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="safetyMargin"
+                    name="safetyMargin"
+                    placeholder="Enter Safety Margin"
+                    value={10}
+                    required
+                  />
+                </div>
+
+                {/* Exchange Rates */}
+                <p>Exchange Rates from USD</p>
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Exchange rate for USD.">
+                    <label htmlFor="usdRate">$</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="usdRate"
+                    name="usdRate"
+                    placeholder="Enter USD Rate"
+                    value={1}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Exchange rate for EUR.">
+                    <label htmlFor="eurRate">€</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="eurRate"
+                    name="eurRate"
+                    placeholder="Enter EUR Rate"
+                    value={0.95}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Exchange rate for KES.">
+                    <label htmlFor="kesRate">KES</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="kesRate"
+                    name="kesRate"
+                    placeholder="Enter KES Rate"
+                    value={150}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Exchange rate for NGN.">
+                    <label htmlFor="ngnRate">NGN</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="ngnRate"
+                    name="ngnRate"
+                    placeholder="Enter NGN Rate"
+                    value={411}
+                    required
+                  />
+                </div>
+
+                {/* Batteries */}
+                <p>Batteries</p>
+
+                {/* Number of Batteries */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The number of batteries required for this project.">
+                    <label htmlFor="numberOfBatteries">Number of Batteries</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="numberOfBatteries"
+                    name="numberOfBatteries"
+                    placeholder="Enter Number of Batteries"
+                    value={12}
+                    required
+                  />
+                </div>
+
+                {/* kWh per Battery */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Energy capacity of each battery in kWh.">
+                    <label htmlFor="kWhPerBattery">kWh per Battery</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="kWhPerBattery"
+                    name="kWhPerBattery"
+                    placeholder="Enter kWh per Battery"
+                    value={7.4}
+                    required
+                  />
+                </div>
+
+                {/* Price per Battery */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of a single battery.">
+                    <label htmlFor="pricePerBattery">Price per Battery ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pricePerBattery"
+                    name="pricePerBattery"
+                    placeholder="Enter Price per Battery"
+                    value={2200}
+                    required
+                  />
+                </div>
+
+                {/* Lugs per Battery */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of lugs per battery.">
+                    <label htmlFor="lugsPerBattery">Lugs per Battery</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="lugsPerBattery"
+                    name="lugsPerBattery"
+                    placeholder="Enter Lugs per Battery"
+                    value={4}
+                    required
+                  />
+                </div>
+
+                {/* kWh for this Site */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total energy capacity required for this site in kWh.">
+                    <label htmlFor="siteKWh">Total kWh for this Site</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="siteKWh"
+                    name="siteKWh"
+                    placeholder="Enter Total kWh for this Site"
+                    value={88.8}
+                    required
+                  />
+                </div>
+
+                {/* Battery Cost (for this Project) */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost of batteries for this project.">
+                    <label htmlFor="batteryCost">Battery Cost (for this Project)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryCost"
+                    name="batteryCost"
+                    placeholder="Enter Total Battery Cost"
+                    value={26400}
+                    required
+                  />
+                </div>
+
+                {/* Shipping */}
+                <p>Shipping</p>
+
+                {/* How Many Sites in Battery Shipment */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of sites included in battery shipment.">
+                    <label htmlFor="sitesInBatteryShipment">How Many Sites in Battery Shipment?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="sitesInBatteryShipment"
+                    name="sitesInBatteryShipment"
+                    placeholder="Enter Number of Sites"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Battery Shipping per kWh */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Shipping cost per kWh for batteries.">
+                    <label htmlFor="batteryShippingPerKwh">Battery Shipping per kWh ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryShippingPerKwh"
+                    name="batteryShippingPerKwh"
+                    placeholder="Enter Battery Shipping per kWh"
+                    value={6}
+                    required
+                  />
+                </div>
+
+                {/* Battery Shipping Cost (for this Project) */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Shipping cost for batteries in this project.">
+                    <label htmlFor="batteryShippingCost">Battery Shipping Cost (for this Project)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryShippingCost"
+                    name="batteryShippingCost"
+                    placeholder="Enter Total Battery Shipping Cost"
+                    value={532.8}
+                    required
+                  />
+                </div>
+
+                {/* How are the Batteries Shipping? */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Container type for battery shipment.">
+                    <label htmlFor="batteryShippingContainer">Battery Shipping Container</label>
+                  </a>
+                  <input
+                    type="text"
+                    id="batteryShippingContainer"
+                    name="batteryShippingContainer"
+                    placeholder="Enter Shipping Container Type"
+                    value={"20' Container"}
+                    required
+                  />
+                </div>
+
+                {/* Batteries Shipping with Inverters? */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Whether batteries are shipped with inverters.">
+                    <label htmlFor="batteriesShippingWithInverters">Batteries Shipping with Inverters?</label>
+                  </a>
+                  <input
+                    type="checkbox"
+                    id="batteriesShippingWithInverters"
+                    name="batteriesShippingWithInverters"
+                    defaultChecked={false}
+                  />
+                </div>
+
+                {/* Customs and Clearing */}
+                <p>Customs and Clearing</p>
+
+                {/* Battery Inspection Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The fee for inspecting batteries at customs.">
+                    <label htmlFor="batteryInspectionFee">Battery Inspection Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInspectionFee"
+                    name="batteryInspectionFee"
+                    placeholder="Enter Battery Inspection Fee"
+                    value={37500}
+                    required
+                  />
+                </div>
+
+                {/* Battery Port Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Port fees for the battery shipment.">
+                    <label htmlFor="batteryPortFees">Battery Port Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryPortFees"
+                    name="batteryPortFees"
+                    placeholder="Enter Battery Port Fees"
+                    value={212280}
+                    required
+                  />
+                </div>
+
+                {/* Battery Clearing Agent Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fees charged by clearing agents for battery customs processing.">
+                    <label htmlFor="batteryClearingAgentFees">Battery Clearing Agent Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryClearingAgentFees"
+                    name="batteryClearingAgentFees"
+                    placeholder="Enter Battery Clearing Agent Fees"
+                    value={33000}
+                    required
+                  />
+                </div>
+
+                {/* Battery VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Value-added tax on battery imports.">
+                    <label htmlFor="batteryVAT">Battery VAT ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryVAT"
+                    name="batteryVAT"
+                    placeholder="Enter Battery VAT"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* Battery Non-VAT Import Taxes */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Other import taxes for batteries that are non-VAT.">
+                    <label htmlFor="batteryNonVATImportTaxes">Battery Non-VAT Import Taxes ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryNonVATImportTaxes"
+                    name="batteryNonVATImportTaxes"
+                    placeholder="Enter Non-VAT Import Taxes"
+                    value={223307}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverters */}
+                <p>Battery Inverters</p>
+
+                {/* Number of Battery Inverters for this Site */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The number of battery inverters required for this site.">
+                    <label htmlFor="numBatteryInverters">Number of Battery Inverters</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="numBatteryInverters"
+                    name="numBatteryInverters"
+                    placeholder="Enter Number of Battery Inverters"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Price */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost per battery inverter.">
+                    <label htmlFor="batteryInverterPrice">Battery Inverter Price ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterPrice"
+                    name="batteryInverterPrice"
+                    placeholder="Enter Battery Inverter Price"
+                    value={2600}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Size */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The power capacity of each battery inverter.">
+                    <label htmlFor="batteryInverterSize">Battery Inverter Size (kW)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterSize"
+                    name="batteryInverterSize"
+                    placeholder="Enter Battery Inverter Size"
+                    value={15}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Cost (for this Project) */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost of battery inverters for this project.">
+                    <label htmlFor="batteryInverterCost">Battery Inverter Cost (for this Project)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterCost"
+                    name="batteryInverterCost"
+                    placeholder="Enter Total Battery Inverter Cost"
+                    value={2600}
+                    required
+                  />
+                </div>
+
+                {/* Shipping */}
+                <p>Shipping</p>
+
+                {/* How Many Projects' Battery Inverters in this Shipment */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of projects included in the battery inverter shipment.">
+                    <label htmlFor="projectsInBatteryInverterShipment">Projects in Battery Inverter Shipment</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="projectsInBatteryInverterShipment"
+                    name="projectsInBatteryInverterShipment"
+                    placeholder="Enter Number of Projects"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Shipping Price per kW */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Shipping cost per kW for battery inverters.">
+                    <label htmlFor="batteryInverterShippingPerKW">Battery Inverter Shipping Price per kW ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterShippingPerKW"
+                    name="batteryInverterShippingPerKW"
+                    placeholder="Enter Shipping Price per kW"
+                    value={36}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Shipping Cost (for this Project) */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total shipping cost for battery inverters in this project.">
+                    <label htmlFor="batteryInverterShippingCost">Battery Inverter Shipping Cost (for this Project)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterShippingCost"
+                    name="batteryInverterShippingCost"
+                    placeholder="Enter Total Shipping Cost"
+                    value={540}
+                    required
+                  />
+                </div>
+
+                {/* How are the Battery Inverters Shipping? */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Container type for battery inverter shipment.">
+                    <label htmlFor="batteryInverterShippingContainer">Battery Inverter Shipping Container</label>
+                  </a>
+                  <input
+                    type="text"
+                    id="batteryInverterShippingContainer"
+                    name="batteryInverterShippingContainer"
+                    placeholder="Enter Shipping Container Type"
+                    value={"20' Container"}
+                    required
+                  />
+                </div>
+
+                {/* Customs and Clearing */}
+                <p>Customs and Clearing</p>
+
+                {/* Battery Inverter Inspection Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Inspection fees for battery inverters at customs.">
+                    <label htmlFor="batteryInverterInspectionFees">Battery Inverter Inspection Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterInspectionFees"
+                    name="batteryInverterInspectionFees"
+                    placeholder="Enter Battery Inverter Inspection Fees"
+                    value={37500}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Port Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Port fees for battery inverter shipment.">
+                    <label htmlFor="batteryInverterPortFees">Battery Inverter Port Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterPortFees"
+                    name="batteryInverterPortFees"
+                    placeholder="Enter Battery Inverter Port Fees"
+                    value={212280}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Clearing Agent Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fees charged by clearing agents for battery inverter customs processing.">
+                    <label htmlFor="batteryInverterClearingAgentFees">Battery Inverter Clearing Agent Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterClearingAgentFees"
+                    name="batteryInverterClearingAgentFees"
+                    placeholder="Enter Battery Inverter Clearing Agent Fees"
+                    value={33000}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Value-added tax on battery inverter imports.">
+                    <label htmlFor="batteryInverterVAT">Battery Inverter VAT ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterVAT"
+                    name="batteryInverterVAT"
+                    placeholder="Enter Battery Inverter VAT"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* Battery Inverter Non-VAT Import Taxes */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Other import taxes for battery inverters that are non-VAT.">
+                    <label htmlFor="batteryInverterNonVATImportTaxes">Battery Inverter Non-VAT Import Taxes ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="batteryInverterNonVATImportTaxes"
+                    name="batteryInverterNonVATImportTaxes"
+                    placeholder="Enter Non-VAT Import Taxes"
+                    value={26035}
+                    required
+                  />
+                </div>
+
+                {/* Distribution */}
+                <p>Distribution</p>
+
+                {/* Are you building distribution lines? */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Indicate whether distribution lines are being built.">
+                    <label htmlFor="buildingDistributionLines">Are you building distribution lines?</label>
+                  </a>
+                  <select
+                    id="buildingDistributionLines"
+                    name="buildingDistributionLines"
+                    required
+                  >
+                    <option value="TRUE">Yes</option>
+                    <option value="FALSE">No</option>
+                  </select>
+                </div>
+
+                {/* Distribution Surveyor Cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of hiring a surveyor for the distribution project.">
+                    <label htmlFor="distributionSurveyorCost">Distribution Surveyor Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="distributionSurveyorCost"
+                    name="distributionSurveyorCost"
+                    placeholder="Enter Distribution Surveyor Cost"
+                    value={60000}
+                    required
+                  />
+                </div>
+
+                {/* Materials Cost per km */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of materials required per kilometer for distribution lines.">
+                    <label htmlFor="materialsCostPerKm">Materials Cost per km ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="materialsCostPerKm"
+                    name="materialsCostPerKm"
+                    placeholder="Enter Materials Cost per km"
+                    value={554000}
+                    required
+                  />
+                </div>
+
+                {/* Labour Cost per km */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of labor required per kilometer for distribution lines.">
+                    <label htmlFor="labourCostPerKm">Labour Cost per km ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="labourCostPerKm"
+                    name="labourCostPerKm"
+                    placeholder="Enter Labour Cost per km"
+                    value={200000}
+                    required
+                  />
+                </div>
+
+                {/* Transport Cost per km */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of transporting materials per kilometer.">
+                    <label htmlFor="transportCostPerKm">Transport Cost per km ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="transportCostPerKm"
+                    name="transportCostPerKm"
+                    placeholder="Enter Transport Cost per km"
+                    value={100000}
+                    required
+                  />
+                </div>
+
+                {/* Contingency */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Contingency fund as a percentage of the total distribution project cost.">
+                    <label htmlFor="contingency">Contingency (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="contingency"
+                    name="contingency"
+                    placeholder="Enter Contingency Percentage"
+                    value={10}
+                    required
+                  />
+                </div>
+
+                {/* Fencing */}
+                <p>Fencing</p>
+
+                {/* Fencing Length */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Length of fencing required for the project, measured in meters.">
+                    <label htmlFor="fencingLength">Fencing Length (m)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="fencingLength"
+                    name="fencingLength"
+                    placeholder="Enter Fencing Length"
+                    value={120}
+                    required
+                  />
+                </div>
+
+                {/* Fencing Labour per Meter */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of labor required per meter of fencing.">
+                    <label htmlFor="fencingLabourPerMeter">Fencing Labour per Meter ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="fencingLabourPerMeter"
+                    name="fencingLabourPerMeter"
+                    placeholder="Enter Fencing Labour Cost per Meter"
+                    value={250}
+                    required
+                  />
+                </div>
+
+                {/* Fencing Materials per Meter */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of fencing materials required per meter.">
+                    <label htmlFor="fencingMaterialsPerMeter">Fencing Materials per Meter ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="fencingMaterialsPerMeter"
+                    name="fencingMaterialsPerMeter"
+                    placeholder="Enter Fencing Materials Cost per Meter"
+                    value={1000}
+                    required
+                  />
+                </div>
+
+                {/* Fencing Materials Transport per Meter */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost to transport fencing materials per meter.">
+                    <label htmlFor="fencingMaterialsTransportPerMeter">Fencing Materials Transport per Meter ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="fencingMaterialsTransportPerMeter"
+                    name="fencingMaterialsTransportPerMeter"
+                    placeholder="Enter Fencing Materials Transport Cost per Meter"
+                    value={100}
+                    required
+                  />
+                </div>
+
+
+                {/* Meters */}
+                <p>Meters</p>
+
+                {/* Materials */}
+                <p>Materials</p>
+
+                {/* How many sites in order? */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of sites included in this order.">
+                    <label htmlFor="sitesInOrder">How many sites in order?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="sitesInOrder"
+                    name="sitesInOrder"
+                    placeholder="Enter Number of Sites in Order"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Count of SMRSD Meters */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of SMRSD meters required for the project.">
+                    <label htmlFor="countOfSMRSDMeters">Count of SMRSD Meters</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="countOfSMRSDMeters"
+                    name="countOfSMRSDMeters"
+                    placeholder="Enter Count of SMRSD Meters"
+                    value={504}
+                    required
+                  />
+                </div>
+
+                {/* Count of SMRPI Meters */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of SMRPI meters required for the project.">
+                    <label htmlFor="countOfSMRPIMeters">Count of SMRPI Meters</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="countOfSMRPIMeters"
+                    name="countOfSMRPIMeters"
+                    placeholder="Enter Count of SMRPI Meters"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* Total Customer Meter Count */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of customer meters for the project.">
+                    <label htmlFor="totalCustomerMeterCount">Total Customer Meter Count</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="totalCustomerMeterCount"
+                    name="totalCustomerMeterCount"
+                    placeholder="Enter Total Customer Meter Count"
+                    value={504}
+                    required
+                  />
+                </div>
+
+                {/* Count of SM200Es */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Count of SM200E meters required for the project.">
+                    <label htmlFor="countOfSM200Es">Count of SM200Es</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="countOfSM200Es"
+                    name="countOfSM200Es"
+                    placeholder="Enter Count of SM200Es"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* SMRSD Price */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost per SMRSD meter.">
+                    <label htmlFor="smrsdPrice">SMRSD Price ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="smrsdPrice"
+                    name="smrsdPrice"
+                    placeholder="Enter SMRSD Price"
+                    value={40}
+                    required
+                  />
+                </div>
+
+                {/* SMRPI Price */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost per SMRPI meter.">
+                    <label htmlFor="smrpiPrice">SMRPI Price ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="smrpiPrice"
+                    name="smrpiPrice"
+                    placeholder="Enter SMRPI Price"
+                    value={100}
+                    required
+                  />
+                </div>
+
+                {/* SM200E Price */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost per SM200E meter.">
+                    <label htmlFor="sm200ePrice">SM200E Price ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="sm200ePrice"
+                    name="sm200ePrice"
+                    placeholder="Enter SM200E Price"
+                    value={150}
+                    required
+                  />
+                </div>
+
+                {/* Base Station Count */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Count of base stations required for the project.">
+                    <label htmlFor="baseStationCount">Base Station Count</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="baseStationCount"
+                    name="baseStationCount"
+                    placeholder="Enter Base Station Count"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Modem Count */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Count of modems required for the project.">
+                    <label htmlFor="modemCount">Modem Count</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="modemCount"
+                    name="modemCount"
+                    placeholder="Enter Modem Count"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* SparkMeter Base Station Price */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of SparkMeter base station.">
+                    <label htmlFor="sparkMeterBaseStationPrice">SparkMeter Base Station Price ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="sparkMeterBaseStationPrice"
+                    name="sparkMeterBaseStationPrice"
+                    placeholder="Enter SparkMeter Base Station Price"
+                    value={1050}
+                    required
+                  />
+                </div>
+
+                {/* Meter Cost Total */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost of meters for this project.">
+                    <label htmlFor="meterCostTotal">Meter Cost Total ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="meterCostTotal"
+                    name="meterCostTotal"
+                    placeholder="Enter Meter Cost Total"
+                    value={21360}
+                    required
+                  />
+                </div>
+
+                {/* Shipping Cost per Meter */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Shipping cost per meter.">
+                    <label htmlFor="shippingCostPerMeter">Shipping Cost per Meter ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="shippingCostPerMeter"
+                    name="shippingCostPerMeter"
+                    placeholder="Enter Shipping Cost per Meter"
+                    value={5.48}
+                    required
+                  />
+                </div>
+
+                {/* Total Meter Shipping Cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost of shipping meters for the project.">
+                    <label htmlFor="totalMeterShippingCost">Total Meter Shipping Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="totalMeterShippingCost"
+                    name="totalMeterShippingCost"
+                    placeholder="Enter Total Meter Shipping Cost"
+                    value={2761.92}
+                    required
+                  />
+                </div>
+
+
+                {/* Customs and Clearing */}
+                <p>Customs and Clearing</p>
+
+                {/* Meter Inspection Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Inspection fee for the meters.">
+                    <label htmlFor="meterInspectionFee">Meter Inspection Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="meterInspectionFee"
+                    name="meterInspectionFee"
+                    placeholder="Enter Meter Inspection Fee"
+                    value={37500}
+                    required
+                  />
+                </div>
+
+                {/* Meter Port Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Port fees for the meters.">
+                    <label htmlFor="meterPortFees">Meter Port Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="meterPortFees"
+                    name="meterPortFees"
+                    placeholder="Enter Meter Port Fees"
+                    value={30000}
+                    required
+                  />
+                </div>
+
+                {/* Meter Clearing Agent Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Clearing agent fees for the meters.">
+                    <label htmlFor="meterClearingAgentFees">Meter Clearing Agent Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="meterClearingAgentFees"
+                    name="meterClearingAgentFees"
+                    placeholder="Enter Meter Clearing Agent Fees"
+                    value={21750}
+                    required
+                  />
+                </div>
+
+                {/* Meter VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Value-added tax (VAT) on meters.">
+                    <label htmlFor="meterVAT">Meter VAT ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="meterVAT"
+                    name="meterVAT"
+                    placeholder="Enter Meter VAT"
+                    value={512640}
+                    required
+                  />
+                </div>
+
+                {/* Meter Non-VAT Import Taxes */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Non-VAT import taxes on meters.">
+                    <label htmlFor="meterNonVATImportTaxes">Meter Non-VAT Import Taxes ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="meterNonVATImportTaxes"
+                    name="meterNonVATImportTaxes"
+                    placeholder="Enter Meter Non-VAT Import Taxes"
+                    value={177101}
+                    required
+                  />
+                </div>
+
+                {/* PV */}
+                <p>PV</p>
+
+                {/* Materials */}
+                <p>Materials</p>
+
+                {/* Panel Size */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Size of each solar panel in watts.">
+                    <label htmlFor="panelSize">Panel Size (W)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="panelSize"
+                    name="panelSize"
+                    placeholder="Enter Panel Size"
+                    value={540}
+                    required
+                  />
+                </div>
+
+                {/* Number of Strings */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of strings in the PV setup.">
+                    <label htmlFor="numberOfStrings">Number of Strings</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="numberOfStrings"
+                    name="numberOfStrings"
+                    placeholder="Enter Number of Strings"
+                    value={30}
+                    required
+                  />
+                </div>
+
+                {/* Panels per String */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of panels in each string.">
+                    <label htmlFor="panelsPerString">Panels per String</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="panelsPerString"
+                    name="panelsPerString"
+                    placeholder="Enter Panels per String"
+                    value={3}
+                    required
+                  />
+                </div>
+
+                {/* Number of Panels for this Project */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of panels for this project.">
+                    <label htmlFor="numberOfPanels">Number of Panels (for this project)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="numberOfPanels"
+                    name="numberOfPanels"
+                    placeholder="Enter Number of Panels"
+                    value={90}
+                    required
+                  />
+                </div>
+
+                {/* Site Wattage */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total wattage for the site.">
+                    <label htmlFor="siteWattage">Site Wattage (W)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="siteWattage"
+                    name="siteWattage"
+                    placeholder="Enter Site Wattage"
+                    value={48600}
+                    required
+                  />
+                </div>
+
+                {/* Price per Watt */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost per watt of the PV setup.">
+                    <label htmlFor="pricePerWatt">Price per Watt ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pricePerWatt"
+                    name="pricePerWatt"
+                    placeholder="Enter Price per Watt"
+                    value={0.273}
+                    required
+                  />
+                </div>
+
+                {/* Price per Panel */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost per solar panel.">
+                    <label htmlFor="pricePerPanel">Price per Panel ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pricePerPanel"
+                    name="pricePerPanel"
+                    placeholder="Enter Price per Panel"
+                    value={147.42}
+                    required
+                  />
+                </div>
+
+                {/* PV Cost for this Project */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost of the PV setup for this project.">
+                    <label htmlFor="pvCostForThisProject">PV Cost (for this project) ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvCostForThisProject"
+                    name="pvCostForThisProject"
+                    placeholder="Enter PV Cost"
+                    value={13267.8}
+                    required
+                  />
+                </div>
+
+                {/* Shipping */}
+                <p>Shipping</p>
+
+                {/* Total Panels in Shipment */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of panels in the shipment.">
+                    <label htmlFor="totalPanelsInShipment">Total Panels in Shipment</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="totalPanelsInShipment"
+                    name="totalPanelsInShipment"
+                    placeholder="Enter Total Panels in Shipment"
+                    value={620}
+                    required
+                  />
+                </div>
+
+                {/* Total Shipment Size */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total size of the shipment in cubic meters.">
+                    <label htmlFor="totalShipmentSize">Total Shipment Size (m³)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="totalShipmentSize"
+                    name="totalShipmentSize"
+                    placeholder="Enter Total Shipment Size"
+                    value={334.8}
+                    required
+                  />
+                </div>
+
+                {/* Portion of Panels Going to this Project */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Percentage of panels in the shipment going to this project.">
+                    <label htmlFor="portionOfPanelsGoingToProject">Portion of Panels Going to this Project (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="portionOfPanelsGoingToProject"
+                    name="portionOfPanelsGoingToProject"
+                    placeholder="Enter Portion of Panels Going to Project"
+                    value={15}
+                    required
+                  />
+                </div>
+
+                {/* International Transport Total */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost for international transport of the shipment.">
+                    <label htmlFor="internationalTransportTotal">International Transport Total ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="internationalTransportTotal"
+                    name="internationalTransportTotal"
+                    placeholder="Enter International Transport Total"
+                    value={4000}
+                    required
+                  />
+                </div>
+
+                {/* International Transport per Panel */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost for international transport per panel.">
+                    <label htmlFor="internationalTransportPerPanel">International Transport per Panel ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="internationalTransportPerPanel"
+                    name="internationalTransportPerPanel"
+                    placeholder="Enter International Transport per Panel"
+                    value={6.45}
+                    required
+                  />
+                </div>
+
+                {/* PV Shipping Cost for this Project */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total shipping cost for PV panels in this project.">
+                    <label htmlFor="pvShippingCostForThisProject">PV Shipping Cost (for this project) ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvShippingCostForThisProject"
+                    name="pvShippingCostForThisProject"
+                    placeholder="Enter PV Shipping Cost"
+                    value={580.65}
+                    required
+                  />
+                </div>
+
+                {/* How are the Panels Shipping? */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Method of shipping for the panels.">
+                    <label htmlFor="howArePanelsShipping">How are the Panels Shipping?</label>
+                  </a>
+                  <input
+                    type="text"
+                    id="howArePanelsShipping"
+                    name="howArePanelsShipping"
+                    placeholder="Enter Shipping Method"
+                    value={"20' Container"}
+                    required
+                  />
+                </div>
+
+                {/* Customs and Clearing */}
+                <p>Customs and Clearing</p>
+
+                {/* PV Inspection Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Inspection fee for the PV setup.">
+                    <label htmlFor="pvInspectionFee">PV Inspection Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvInspectionFee"
+                    name="pvInspectionFee"
+                    placeholder="Enter PV Inspection Fee"
+                    value={5444}
+                    required
+                  />
+                </div>
+
+                {/* PV Port Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Port fees for the PV setup.">
+                    <label htmlFor="pvPortFees">PV Port Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvPortFees"
+                    name="pvPortFees"
+                    placeholder="Enter PV Port Fees"
+                    value={30815}
+                    required
+                  />
+                </div>
+
+                {/* PV Clearing Agent Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Clearing agent fees for the PV setup.">
+                    <label htmlFor="pvClearingAgentFees">PV Clearing Agent Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvClearingAgentFees"
+                    name="pvClearingAgentFees"
+                    placeholder="Enter PV Clearing Agent Fees"
+                    value={4790}
+                    required
+                  />
+                </div>
+
+                {/* PV VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Value-added tax applicable to the PV setup.">
+                    <label htmlFor="pvVAT">PV VAT (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvVAT"
+                    name="pvVAT"
+                    placeholder="Enter PV VAT"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* PV Non-VAT Import Taxes */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Non-VAT import taxes applicable to the PV setup.">
+                    <label htmlFor="pvNonVATImportTaxes">PV Non-VAT Import Taxes ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvNonVATImportTaxes"
+                    name="pvNonVATImportTaxes"
+                    placeholder="Enter PV Non-VAT Import Taxes"
+                    value={114821}
+                    required
+                  />
+                </div>
+
+                {/* PV Inverters/Charger Controllers */}
+                <p>PV Inverters/Charger Controllers</p>
+
+                {/* Sites in Shipment */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of sites included in the shipment.">
+                    <label htmlFor="sitesInShipment">Sites in Shipment</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="sitesInShipment"
+                    name="sitesInShipment"
+                    placeholder="Enter Number of Sites"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Price per Inverter/Charger */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of each inverter or charger.">
+                    <label htmlFor="pricePerInverterCharger">Price per Inverter/Charger ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pricePerInverterCharger"
+                    name="pricePerInverterCharger"
+                    placeholder="Enter Price per Inverter/Charger"
+                    value={588.88}
+                    required
+                  />
+                </div>
+
+                {/* Count of PV Inverters/Charge Controllers */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total number of PV inverters or charge controllers.">
+                    <label htmlFor="countPVInverters">Count of PV Inverters/Charge Controllers</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="countPVInverters"
+                    name="countPVInverters"
+                    placeholder="Enter Count of Inverters/Charge Controllers"
+                    value={10}
+                    required
+                  />
+                </div>
+
+                {/* PV Inverter/Charge Controller Cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost for the PV inverters/charge controllers.">
+                    <label htmlFor="pvInverterCost">PV Inverter/Charge Controller Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="pvInverterCost"
+                    name="pvInverterCost"
+                    placeholder="Enter PV Inverter Cost"
+                    value={5888.8}
+                    required
+                  />
+                </div>
+
+                {/* Shipping Cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Shipping cost associated with the inverters/chargers.">
+                    <label htmlFor="shippingCost">Shipping Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="shippingCost"
+                    name="shippingCost"
+                    placeholder="Enter Shipping Cost"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* Racking */}
+                <p>Racking</p>
+
+                {/* Materials and Labour */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Materials and labor costs for racking per watt.">
+                    <label htmlFor="materialsPricePerW">Materials Price per W ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="materialsPricePerW"
+                    name="materialsPricePerW"
+                    placeholder="Enter Materials Price per W"
+                    value={0.05}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Labor costs for racking per watt.">
+                    <label htmlFor="labourPricePerW">Labour Price per W ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="labourPricePerW"
+                    name="labourPricePerW"
+                    placeholder="Enter Labour Price per W"
+                    value={0.01}
+                    required
+                  />
+                </div>
+
+                {/* Racking Materials Cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost of racking materials.">
+                    <label htmlFor="rackingMaterialsCost">Racking Materials Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingMaterialsCost"
+                    name="rackingMaterialsCost"
+                    placeholder="Enter Racking Materials Cost"
+                    value={2430}
+                    required
+                  />
+                </div>
+
+                {/* Shipping */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Shipping cost for racking materials.">
+                    <label htmlFor="rackingShippingCost">Racking Shipping Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingShippingCost"
+                    name="rackingShippingCost"
+                    placeholder="Enter Racking Shipping Cost"
+                    value={8000}
+                    required
+                  />
+                </div>
+
+                {/* Projects' Racking in Shipment */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of projects included in the racking shipment.">
+                    <label htmlFor="projectsInShipment">How Many Projects' Racking is in this Shipment?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="projectsInShipment"
+                    name="projectsInShipment"
+                    placeholder="Enter Number of Projects"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* How is the Racking Shipping */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Method of shipping for racking.">
+                    <label htmlFor="rackingShippingMethod">How is the Racking Shipping?</label>
+                  </a>
+                  <input
+                    type="text"
+                    id="rackingShippingMethod"
+                    name="rackingShippingMethod"
+                    placeholder="Enter Racking Shipping Method"
+                    value={"20' Container"}
+                    required
+                  />
+                </div>
+
+                {/* Customs and Clearing */}
+                <p>Customs and Clearing</p>
+
+                {/* Racking Inspection Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Inspection fee for the racking setup.">
+                    <label htmlFor="rackingInspectionFee">Racking Inspection Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingInspectionFee"
+                    name="rackingInspectionFee"
+                    placeholder="Enter Racking Inspection Fee"
+                    value={37500}
+                    required
+                  />
+                </div>
+
+                {/* Racking Port Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Port fees for the racking setup.">
+                    <label htmlFor="rackingPortFees">Racking Port Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingPortFees"
+                    name="rackingPortFees"
+                    placeholder="Enter Racking Port Fees"
+                    value={212280}
+                    required
+                  />
+                </div>
+
+                {/* Racking Clearing Agent Fees */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Clearing agent fees for the racking setup.">
+                    <label htmlFor="rackingClearingAgentFees">Racking Clearing Agent Fees ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingClearingAgentFees"
+                    name="rackingClearingAgentFees"
+                    placeholder="Enter Racking Clearing Agent Fees"
+                    value={21750}
+                    required
+                  />
+                </div>
+
+                {/* Racking VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Value-added tax applicable to the racking setup.">
+                    <label htmlFor="rackingVAT">Racking VAT (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingVAT"
+                    name="rackingVAT"
+                    placeholder="Enter Racking VAT"
+                    value={314465}
+                    required
+                  />
+                </div>
+
+                {/* Racking Non-VAT Import Taxes */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Non-VAT import taxes applicable to the racking setup.">
+                    <label htmlFor="rackingNonVATImportTaxes">Racking Non-VAT Import Taxes ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="rackingNonVATImportTaxes"
+                    name="rackingNonVATImportTaxes"
+                    placeholder="Enter Racking Non-VAT Import Taxes"
+                    value={479558}
+                    required
+                  />
+                </div>
+
+                {/* Logistics */}
+                <p>Logistics</p>
+
+                {/* International Shipping */}
+                <p>International Shipping</p>
+
+                {/* Pre-Shipping Inspection Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fee for pre-shipping inspection (SGS/BV/IT).">
+                    <label htmlFor="preShippingInspectionFee">Pre-Shipping Inspection Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="preShippingInspectionFee"
+                    name="preShippingInspectionFee"
+                    placeholder="Enter Pre-Shipping Inspection Fee"
+                    value={250}
+                    required
+                  />
+                </div>
+
+                {/* Shipping Insurance Rate Estimate */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Estimated insurance rate for shipping.">
+                    <label htmlFor="insuranceRateEstimate">Insurance Rate Estimate (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="insuranceRateEstimate"
+                    name="insuranceRateEstimate"
+                    placeholder="Enter Insurance Rate Estimate"
+                    value={0.5}
+                    required
+                  />
+                </div>
+
+                {/* Clearing Agents */}
+                <p>Clearing Agents</p>
+
+                {/* IDF Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fee for IDF clearance.">
+                    <label htmlFor="idfFee">IDF Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="idfFee"
+                    name="idfFee"
+                    placeholder="Enter IDF Fee"
+                    value={3000}
+                    required
+                  />
+                </div>
+
+                {/* Customs Documentation and Agency Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fee for customs documentation and agency services.">
+                    <label htmlFor="customsDocumentationFee">Customs Documentation and Agency Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="customsDocumentationFee"
+                    name="customsDocumentationFee"
+                    placeholder="Enter Customs Documentation Fee"
+                    value={18750}
+                    required
+                  />
+                </div>
+
+                {/* Clearing Agent Fees per Shipment */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Clearing agent fees charged for each shipment.">
+                    <label htmlFor="clearingAgentFees">Clearing Agent Fees per Shipment ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="clearingAgentFees"
+                    name="clearingAgentFees"
+                    placeholder="Enter Clearing Agent Fees"
+                    value={21750}
+                    required
+                  />
+                </div>
+
+                {/* EPRA Permit Processing Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Processing fee for EPRA permits related to PV, batteries, and inverters.">
+                    <label htmlFor="epraPermitProcessingFee">EPRA Permit Processing Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="epraPermitProcessingFee"
+                    name="epraPermitProcessingFee"
+                    placeholder="Enter EPRA Permit Processing Fee"
+                    value={11250}
+                    required
+                  />
+                </div>
+
+                {/* Port and Shipping Line */}
+                <p>Port and Shipping Line</p>
+
+                {/* Delivery Order Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fee for delivery orders at the port.">
+                    <label htmlFor="deliveryOrderFee">Delivery Order Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="deliveryOrderFee"
+                    name="deliveryOrderFee"
+                    placeholder="Enter Delivery Order Fee"
+                    value={70}
+                    required
+                  />
+                </div>
+
+                {/* 20' Container Costs */}
+                <p>20' Container</p>
+
+                {/* THC/Handling/Cleaning Fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Handling and cleaning fees for 20' containers.">
+                    <label htmlFor="thcHandlingCleaningFee20ft">THC/Handling/Cleaning Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="thcHandlingCleaningFee20ft"
+                    name="thcHandlingCleaningFee20ft"
+                    placeholder="Enter THC/Handling/Cleaning Fee"
+                    value={170}
+                    required
+                  />
+                </div>
+
+                {/* Shorehandling */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost for shorehandling of 20' containers.">
+                    <label htmlFor="shorehandling20ft">Shorehandling ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="shorehandling20ft"
+                    name="shorehandling20ft"
+                    placeholder="Enter Shorehandling Cost"
+                    value={150}
+                    required
+                  />
+                </div>
+
+                {/* Wharfage */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Wharfage costs for 20' containers.">
+                    <label htmlFor="wharfage20ft">Wharfage ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="wharfage20ft"
+                    name="wharfage20ft"
+                    placeholder="Enter Wharfage Cost"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* Freight Movement to Nairobi on SGR */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost for freight movement to Nairobi.">
+                    <label htmlFor="freightMovementNairobi20ft">Freight Movement to Nairobi on SGR ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="freightMovementNairobi20ft"
+                    name="freightMovementNairobi20ft"
+                    placeholder="Enter Freight Movement Cost"
+                    value={500}
+                    required
+                  />
+                </div>
+
+                {/* KPA Port Verification Charge */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Charge for port verification.">
+                    <label htmlFor="kpaPortVerificationCharge20ft">KPA Port Verification Charge ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="kpaPortVerificationCharge20ft"
+                    name="kpaPortVerificationCharge20ft"
+                    placeholder="Enter KPA Port Verification Charge"
+                    value={80}
+                    required
+                  />
+                </div>
+
+                {/* KPA Fees for Bringing Container Back to Mombasa */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fees for returning the container to Mombasa.">
+                    <label htmlFor="kpaFeesReturning20ft">KPA Fees for Bringing Container Back to Mombasa ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="kpaFeesReturning20ft"
+                    name="kpaFeesReturning20ft"
+                    placeholder="Enter KPA Fees Returning Cost"
+                    value={37500}
+                    required
+                  />
+                </div>
+
+                {/* Total for 20' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost for the 20' container.">
+                    <label htmlFor="total20ftContainer">Total for 20' Container ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="total20ftContainer"
+                    name="total20ftContainer"
+                    placeholder="Enter Total for 20' Container"
+                    value={212280}
+                    required
+                  />
+                </div>
+
+                {/* 40' Container Costs */}
+                <p>40' Container</p>
+
+                {/* THC/Handling/Cleaning Fee for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Handling and cleaning fees for 40' containers.">
+                    <label htmlFor="thcHandlingCleaningFee40ft">THC/Handling/Cleaning Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="thcHandlingCleaningFee40ft"
+                    name="thcHandlingCleaningFee40ft"
+                    placeholder="Enter THC/Handling/Cleaning Fee"
+                    value={230}
+                    required
+                  />
+                </div>
+
+                {/* Shorehandling for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost for shorehandling of 40' containers.">
+                    <label htmlFor="shorehandling40ft">Shorehandling ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="shorehandling40ft"
+                    name="shorehandling40ft"
+                    placeholder="Enter Shorehandling Cost"
+                    value={225}
+                    required
+                  />
+                </div>
+
+                {/* Wharfage for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Wharfage costs for 40' containers.">
+                    <label htmlFor="wharfage40ft">Wharfage ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="wharfage40ft"
+                    name="wharfage40ft"
+                    placeholder="Enter Wharfage Cost"
+                    value={0}
+                    required
+                  />
+                </div>
+
+                {/* Freight Movement to Nairobi on SGR for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost for freight movement to Nairobi for 40' containers.">
+                    <label htmlFor="freightMovementNairobi40ft">Freight Movement to Nairobi on SGR ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="freightMovementNairobi40ft"
+                    name="freightMovementNairobi40ft"
+                    placeholder="Enter Freight Movement Cost"
+                    value={1000}
+                    required
+                  />
+                </div>
+
+                {/* KPA Port Verification Charge for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Charge for port verification for 40' containers.">
+                    <label htmlFor="kpaPortVerificationCharge40ft">KPA Port Verification Charge ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="kpaPortVerificationCharge40ft"
+                    name="kpaPortVerificationCharge40ft"
+                    placeholder="Enter KPA Port Verification Charge"
+                    value={100}
+                    required
+                  />
+                </div>
+
+                {/* KPA Fees for Bringing Container Back to Mombasa for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Fees for returning the 40' container to Mombasa.">
+                    <label htmlFor="kpaFeesReturning40ft">KPA Fees for Bringing Container Back to Mombasa ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="kpaFeesReturning40ft"
+                    name="kpaFeesReturning40ft"
+                    placeholder="Enter KPA Fees Returning Cost"
+                    value={75000}
+                    required
+                  />
+                </div>
+
+                {/* Total for 40' Container */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Total cost for the 40' container.">
+                    <label htmlFor="total40ftContainer">Total for 40' Container ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="total40ftContainer"
+                    name="total40ftContainer"
+                    placeholder="Enter Total for 40' Container"
+                    value={70000}
+                    required
+                  />
+                </div>
+
+                {/* Domestic Transport */}
+                <p>Domestic Transport</p>
+
+                {/* Cost of 5T truck to site */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of using a 5T truck for transport.">
+                    <label htmlFor="costOf5TTruck">Cost of 5T Truck to Site ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="costOf5TTruck"
+                    name="costOf5TTruck"
+                    placeholder="Enter Cost of 5T Truck"
+                    value={100000}
+                    required
+                  />
+                </div>
+
+                {/* Split racking transport with how many other categories */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of other categories to split racking transport with.">
+                    <label htmlFor="splitRackingTransport">Split Racking Transport With How Many Categories?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="splitRackingTransport"
+                    name="splitRackingTransport"
+                    placeholder="Enter Number of Categories"
+                    value={2}
+                    required
+                  />
+                </div>
+
+                {/* Split panels transport with how many other categories */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of other categories to split panel transport with.">
+                    <label htmlFor="splitPanelsTransport">Split Panels Transport With How Many Categories?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="splitPanelsTransport"
+                    name="splitPanelsTransport"
+                    placeholder="Enter Number of Categories"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Split power house cabinet transport with how many other categories */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of other categories to split power house cabinet transport with.">
+                    <label htmlFor="splitPowerHouseTransport">Split Power House Cabinet Transport With How Many Categories?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="splitPowerHouseTransport"
+                    name="splitPowerHouseTransport"
+                    placeholder="Enter Number of Categories"
+                    value={1}
+                    required
+                  />
+                </div>
+
+                {/* Split meters transport with how many other categories */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Number of other categories to split meter transport with.">
+                    <label htmlFor="splitMetersTransport">Split Meters Transport With How Many Categories?</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="splitMetersTransport"
+                    name="splitMetersTransport"
+                    placeholder="Enter Number of Categories"
+                    value={2}
+                    required
+                  />
+                </div>
+
+                {/* Normal cargo boat transport cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of using a normal cargo boat for transport.">
+                    <label htmlFor="normalCargoBoatCost">Normal Cargo Boat Transport Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="normalCargoBoatCost"
+                    name="normalCargoBoatCost"
+                    placeholder="Enter Normal Cargo Boat Cost"
+                    value={20000}
+                    required
+                  />
+                </div>
+
+                {/* Big boat transport cost */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Cost of using a big boat for transport.">
+                    <label htmlFor="bigBoatTransportCost">Big Boat Transport Cost ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="bigBoatTransportCost"
+                    name="bigBoatTransportCost"
+                    placeholder="Enter Big Boat Transport Cost"
+                    value={48000}
+                    required
+                  />
+                </div>
+
+                {/* Taxes */}
+                <p>Taxes</p>
+
+                {/* VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Value Added Tax percentage.">
+                    <label htmlFor="vat">VAT (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="vat"
+                    name="vat"
+                    placeholder="Enter VAT Percentage"
+                    value={16}
+                    required
+                  />
+                </div>
+
+                {/* Taxes besides VAT */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Other applicable taxes besides VAT.">
+                    <label htmlFor="otherTaxes">Taxes Besides VAT (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="otherTaxes"
+                    name="otherTaxes"
+                    placeholder="Enter Other Taxes Percentage"
+                    value={5.5}
+                    required
+                  />
+                </div>
+
+                {/* Import Duty */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="Import Duty percentage applied to racking.">
+                    <label htmlFor="importDuty">Import Duty (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="importDuty"
+                    name="importDuty"
+                    placeholder="Enter Import Duty Percentage"
+                    value={25}
+                    required
+                  />
+                </div>
+
+                {/* NCA Levy */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="NCA Levy applicable on amounts over Kshs 5M.">
+                    <label htmlFor="ncaLevy">NCA Levy (%)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="ncaLevy"
+                    name="ncaLevy"
+                    placeholder="Enter NCA Levy Percentage"
+                    value={0.5}
+                    required
+                  />
+                </div>
+
+                {/* NEMA application fee */}
+                <div className="form-group">
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="NEMA application fee.">
+                    <label htmlFor="nemaApplicationFee">NEMA Application Fee ($)</label>
+                  </a>
+                  <input
+                    type="number"
+                    id="nemaApplicationFee"
+                    name="nemaApplicationFee"
+                    placeholder="Enter NEMA Application Fee"
+                    value={31058}
                     required
                   />
                 </div>
