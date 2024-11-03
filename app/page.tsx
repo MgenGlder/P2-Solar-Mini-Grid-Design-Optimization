@@ -117,7 +117,7 @@ export default function Home() {
               <h2 className="font-bold">🛠️ Demo!:</h2>
                 <div className="video-responsive" style={{display: "block"}}>
                   <a style={{display: "block", textAlign: "center", paddingBottom: "20px"}} href="https://docs.google.com/presentation/d/1VRt0P0QH3UsihzLN1k2JoLLMS2xdAgjDxrZaKJftwyM/edit#slide=id.g2f89acebcd9_1_264">🔗 Click here for the presentation slides! 🔗</a>
-                  <iframe style={{margin: "0 auto"}} width="560" height="315" src="https://www.youtube.com/embed/QTgZVbioTrA?si=PHpsE03Q8I6SqCDZ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                  <iframe style={{margin: "0 auto", width: "100%"}} width="560" height="315" src="https://www.youtube.com/embed/QTgZVbioTrA?si=PHpsE03Q8I6SqCDZ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
               </section>
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick w-full">
