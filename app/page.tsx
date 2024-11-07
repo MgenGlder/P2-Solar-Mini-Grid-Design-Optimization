@@ -8,6 +8,18 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState({pvSize: '0', batterySize: '0', completed: false});
+  const [priceResults, setPriceResults] = useState({
+    pvSize: '0',
+    batterySize: '0',
+    kWhForSite: '0',
+    batteryCost: '0',
+    batteryInverterCost: '0',
+    batteryShippingInverterCost: '0',
+    totalCustomerMeterCount: '0',
+    meterCostTotal: '0',
+    meterShippingCostTotal: '0',
+    completed: false,
+  })
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(false); 
   const fakeEmail = "email@email.com";
@@ -39,23 +51,23 @@ export default function Home() {
     
     const shippingCostPerMeter = parseFloat(formData.get('shippingCostPerMeter') as string);
     
-    const pvSize = pvSizeInputValue / 1000;
-    const batterySize = batterySizeInputValue;
+    const pvSize = (pvSizeInputValue / 1000).toString();
+    const batterySize = batterySizeInputValue.toString();
     
-    const kWhForSite = (numBatteries * kWhPerBattery).toFixed(2);
-    const batteryCost = (numBatteries * pricePerBattery).toFixed(2);
+    const kWhForSite = (numBatteries * kWhPerBattery).toFixed(2).toString();
+    const batteryCost = (numBatteries * pricePerBattery).toFixed(2).toString();
     
-    const batteryInverterCost = (numBatteryInverters * batteryInverterPrice).toFixed(2);
-    const batteryShippingInverterCost = (numBatteryInverters * batteryInverterShippingPrice * batteryInverterSize).toFixed(2);
+    const batteryInverterCost = (numBatteryInverters * batteryInverterPrice).toFixed(2).toString();
+    const batteryShippingInverterCost = (numBatteryInverters * batteryInverterShippingPrice * batteryInverterSize).toFixed(2).toString();
     
-    const totalCustomerMeterCount = countOfSMRSDMeters + countOfSMRPIMeters;
-    const meterCostTotal = (countOfSMRSDMeters * smrsdPrice) + (countOfSMRPIMeters * smrpiPrice) + (countOfSM200Es * sm200ePrice) + (baseStationCount * sparkMeterBaseStationPrice);
+    const totalCustomerMeterCount = (countOfSMRSDMeters + countOfSMRPIMeters).toString();
+    const meterCostTotal = ((countOfSMRSDMeters * smrsdPrice) + (countOfSMRPIMeters * smrpiPrice) + (countOfSM200Es * sm200ePrice) + (baseStationCount * sparkMeterBaseStationPrice)).toString();
     
-    const meterShippingCostTotal = totalCustomerMeterCount * shippingCostPerMeter
+    const meterShippingCostTotal = (parseInt(totalCustomerMeterCount) * shippingCostPerMeter).toString()
     
     
     setTimeout(() => {
-      setResults({
+      setPriceResults({
         pvSize,
         batterySize,
         kWhForSite,
@@ -481,17 +493,17 @@ export default function Home() {
               <div className="loading-animation">
                 <p>Retrieving results...</p>
               </div>
-            ) : results.completed ? (
+            ) : (priceResults.completed) ? (
               <div className="results">
-                <p>PV Size = {results.pvSize}</p>
-                <p>Battery Size = {results.batterySize}</p>
-                <p>kWh for this site = {results.kWhForSite}</p>
-                <p>Battery Cost = {results.batteryCost}</p>
-                <p>Battery Inverter Cost = {results.batteryInverterCost}</p>
-                <p>Battery Shipping Inverter Cost = {results.batteryShippingInverterCost}</p>
-                <p>Total Customer Meter Count = {results.totalCustomerMeterCount}</p>
-                <p>Meter Total Cost = {results.meterCostTotal}</p>
-                <p>Shipping Meter Total Cost = {results.meterShippingCostTotal}</p>
+                <p>PV Size = {priceResults.pvSize}</p>
+                <p>Battery Size = {priceResults.batterySize}</p>
+                <p>kWh for this site = {priceResults.kWhForSite}</p>
+                <p>Battery Cost = {priceResults.batteryCost}</p>
+                <p>Battery Inverter Cost = {priceResults.batteryInverterCost}</p>
+                <p>Battery Shipping Inverter Cost = {priceResults.batteryShippingInverterCost}</p>
+                <p>Total Customer Meter Count = {priceResults.totalCustomerMeterCount}</p>
+                <p>Meter Total Cost = {priceResults.meterCostTotal}</p>
+                <p>Shipping Meter Total Cost = {priceResults.meterShippingCostTotal}</p>
                 <form className="reset-form" onSubmit={handleResetB}>
                   <button type="submit" className="submit-button">Reset</button>
                 </form>
