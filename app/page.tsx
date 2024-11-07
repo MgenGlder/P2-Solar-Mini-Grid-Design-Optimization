@@ -18,6 +18,10 @@ export default function Home() {
     totalCustomerMeterCount: '0',
     meterCostTotal: '0',
     meterShippingCostTotal: '0',
+    numberOfPanels: '0',
+    siteWattage: '0',
+    pricePerPanel: '0',
+    pvCost: '0',
     completed: false,
   })
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -50,6 +54,12 @@ export default function Home() {
     const sparkMeterBaseStationPrice = parseFloat(formData.get('sparkMeterBaseStationPrice') as string);
     
     const shippingCostPerMeter = parseFloat(formData.get('shippingCostPerMeter') as string);
+
+    const panelSize = parseInt(formData.get('panelSize') as string);
+    const numberOfStrings = parseInt(formData.get('numberOfStrings') as string)
+    const panelsPerString = parseInt(formData.get('panelsPerString') as string);
+    const pricePerWatt = parseFloat(formData.get('pricePerWatt') as string);
+
     
     const pvSize = (pvSizeInputValue / 1000).toString();
     const batterySize = batterySizeInputValue.toString();
@@ -64,6 +74,12 @@ export default function Home() {
     const meterCostTotal = ((countOfSMRSDMeters * smrsdPrice) + (countOfSMRPIMeters * smrpiPrice) + (countOfSM200Es * sm200ePrice) + (baseStationCount * sparkMeterBaseStationPrice)).toString();
     
     const meterShippingCostTotal = (parseInt(totalCustomerMeterCount) * shippingCostPerMeter).toString()
+
+    const numberOfPanels = (numberOfStrings * panelsPerString).toString()
+    const siteWattage = (panelSize * parseInt(numberOfPanels)).toString()
+    const pricePerPanel = (panelSize * pricePerWatt).toString()
+    const pvCost = (parseInt(numberOfPanels) * parseFloat(pricePerPanel)).toFixed(2).toString()
+
     
     
     setTimeout(() => {
@@ -77,6 +93,10 @@ export default function Home() {
         totalCustomerMeterCount,
         meterCostTotal,
         meterShippingCostTotal,
+        numberOfPanels,
+        siteWattage,
+        pricePerPanel,
+        pvCost,
         completed: true
       });
       setIsLoading(false);
@@ -91,6 +111,29 @@ export default function Home() {
         pvSize: '0',
         batterySize: '0',
         completed: false
+      })
+  }
+
+  function handleResetPrice(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsLoading(false);
+    
+    
+    setPriceResults({
+        pvSize: '0',
+        batterySize: '0',
+        kWhForSite: '0',
+        batteryCost: '0',
+        batteryInverterCost: '0',
+        batteryShippingInverterCost: '0',
+        totalCustomerMeterCount: '0',
+        meterCostTotal: '0',
+        meterShippingCostTotal: '0',
+        numberOfPanels: '0',
+        siteWattage: '0',
+        pricePerPanel: '0',
+        pvCost: '0',
+        completed: false,
       })
   }
   function handleLogin(event: React.FormEvent<HTMLFormElement>) {
@@ -504,7 +547,11 @@ export default function Home() {
                 <p>Total Customer Meter Count = {priceResults.totalCustomerMeterCount}</p>
                 <p>Meter Total Cost = {priceResults.meterCostTotal}</p>
                 <p>Shipping Meter Total Cost = {priceResults.meterShippingCostTotal}</p>
-                <form className="reset-form" onSubmit={handleResetB}>
+                <p>Number of Panels = {priceResults.numberOfPanels}</p>
+                <p>Site Wattage = {priceResults.siteWattage}</p>
+                <p>Price Per Panel= {priceResults.pricePerPanel}</p>
+                <p>Pv Cost = {priceResults.pvCost}</p>
+                <form className="reset-form" onSubmit={handleResetPrice}>
                   <button type="submit" className="submit-button">Reset</button>
                 </form>
               </div>
@@ -1632,7 +1679,7 @@ export default function Home() {
                     name="panelsPerString"
                     placeholder="Panels per String"
                     value={3}
-                    disabled={true}
+                    disabled={false}
                     required
                   />
                 </div>
