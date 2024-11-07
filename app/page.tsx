@@ -8,20 +8,75 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState({pvSize: '0', batterySize: '0', completed: false});
+  const [priceResults, setPriceResults] = useState({
+    pvSize: '0',
+    batterySize: '0',
+    kWhForSite: '0',
+    batteryCost: '0',
+    batteryInverterCost: '0',
+    batteryShippingInverterCost: '0',
+    totalCustomerMeterCount: '0',
+    meterCostTotal: '0',
+    meterShippingCostTotal: '0',
+    completed: false,
+  })
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(false); 
   const fakeEmail = "email@email.com";
   const fakePassword = "password";
 
-
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const pvSizeInputValue = parseInt(formData.get('PVSiteWattage') as string);
+    const batterySizeInputValue = parseInt(formData.get('BatterykWhAtSite') as string);
+    const numBatteries = parseInt(formData.get('numberOfBatteries') as string, 10);
+    const kWhPerBattery = parseFloat(formData.get('kWhPerBattery') as string);
+    const pricePerBattery = parseFloat(formData.get('pricePerBattery') as string);
+    const numBatteryInverters = parseInt(formData.get('numBatteryInverters') as string, 10);
+    const batteryInverterPrice = parseFloat(formData.get('batteryInverterPrice') as string);
+    const batteryInverterShippingPrice = parseFloat(formData.get('batteryInverterShippingPerKW') as string);
+    const batteryInverterSize = parseInt(formData.get('batteryInverterSize') as string, 10);
+    
+    const countOfSMRSDMeters = parseInt(formData.get('countOfSMRSDMeters') as string, 10);
+    const countOfSMRPIMeters = parseInt(formData.get('countOfSMRPIMeters') as string, 10);
+    const countOfSM200Es = parseInt(formData.get('countOfSM200Es') as string, 10);
+    const smrsdPrice = parseFloat(formData.get('smrsdPrice') as string);
+    const smrpiPrice = parseFloat(formData.get('smrpiPrice') as string);
+    const sm200ePrice = parseFloat(formData.get('sm200ePrice') as string);
+    const baseStationCount = parseInt(formData.get('baseStationCount') as string, 10);
+    const sparkMeterBaseStationPrice = parseFloat(formData.get('sparkMeterBaseStationPrice') as string);
+    
+    const shippingCostPerMeter = parseFloat(formData.get('shippingCostPerMeter') as string);
+    
+    const pvSize = (pvSizeInputValue / 1000).toString();
+    const batterySize = batterySizeInputValue.toString();
+    
+    const kWhForSite = (numBatteries * kWhPerBattery).toFixed(2).toString();
+    const batteryCost = (numBatteries * pricePerBattery).toFixed(2).toString();
+    
+    const batteryInverterCost = (numBatteryInverters * batteryInverterPrice).toFixed(2).toString();
+    const batteryShippingInverterCost = (numBatteryInverters * batteryInverterShippingPrice * batteryInverterSize).toFixed(2).toString();
+    
+    const totalCustomerMeterCount = (countOfSMRSDMeters + countOfSMRPIMeters).toString();
+    const meterCostTotal = ((countOfSMRSDMeters * smrsdPrice) + (countOfSMRPIMeters * smrpiPrice) + (countOfSM200Es * sm200ePrice) + (baseStationCount * sparkMeterBaseStationPrice)).toString();
+    
+    const meterShippingCostTotal = (parseInt(totalCustomerMeterCount) * shippingCostPerMeter).toString()
+    
     
     setTimeout(() => {
-      setResults({
-        pvSize: (Math.random() * 80).toFixed(2),
-        batterySize: (Math.random() * 80).toFixed(2),
+      setPriceResults({
+        pvSize,
+        batterySize,
+        kWhForSite,
+        batteryCost,
+        batteryInverterCost,
+        batteryShippingInverterCost,
+        totalCustomerMeterCount,
+        meterCostTotal,
+        meterShippingCostTotal,
         completed: true
       });
       setIsLoading(false);
@@ -438,46 +493,55 @@ export default function Home() {
               <div className="loading-animation">
                 <p>Retrieving results...</p>
               </div>
-            ) : results.completed ? (
+            ) : (priceResults.completed) ? (
               <div className="results">
-                <p>PV Size = {results.pvSize}</p>
-                <p>Battery Size = {results.batterySize}</p>
+                <p>PV Size = {priceResults.pvSize}</p>
+                <p>Battery Size = {priceResults.batterySize}</p>
+                <p>kWh for this site = {priceResults.kWhForSite}</p>
+                <p>Battery Cost = {priceResults.batteryCost}</p>
+                <p>Battery Inverter Cost = {priceResults.batteryInverterCost}</p>
+                <p>Battery Shipping Inverter Cost = {priceResults.batteryShippingInverterCost}</p>
+                <p>Total Customer Meter Count = {priceResults.totalCustomerMeterCount}</p>
+                <p>Meter Total Cost = {priceResults.meterCostTotal}</p>
+                <p>Shipping Meter Total Cost = {priceResults.meterShippingCostTotal}</p>
                 <form className="reset-form" onSubmit={handleResetB}>
                   <button type="submit" className="submit-button">Reset</button>
                 </form>
               </div>
             ) : (
               <form className="price-form" onSubmit={handleSubmit}>
-                <p>Template 50 kW Minigrid</p>
+                <p>Quick Inputs Section</p>
 
-                {/* PV Section */}
+                {/* Quick Inputs Section*/}
                 <div className="form-group">
-                  <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the PV Array.">
-                    <label htmlFor="pvSize">PV Size</label>
+                  <a data-tooltip-id="form-tooltip" data-tooltip-content="PV Site Wattage">
+                    <label htmlFor="PVSiteWattage">PV Site Wattage</label>
                   </a>
                   <input
                     type="number"
-                    id="pvSize"
-                    name="pvSize"
-                    placeholder="PV Size"
-                    value={48.6}
-                    disabled={true}
+                    id="PVSiteWattage"
+                    name="PVSiteWattage"
+                    placeholder="PVSiteWattage"
+                    value={48600}
+                    disabled={false}
                     required
                   />
                 </div>
+                
+                <p>Project Information</p>
 
                 <p>Battery Section</p>
                 <div className="form-group">
                   <a data-tooltip-id="form-tooltip" data-tooltip-content="The size of the battery in kWh">
-                    <label htmlFor="batterySize">Battery Size</label>
+                    <label htmlFor="BatterykWhAtSite">Battery Size</label>
                   </a>
                   <input
                     type="number"
-                    id="batterySize"
-                    name="batterySize"
+                    id="BatterykWhAtSite"
+                    name="BatterykWhAtSite"
                     placeholder="Battery Size"
                     value={88.8}
-                    disabled={true}
+                    disabled={false}
                     required
                   />
                 </div>
