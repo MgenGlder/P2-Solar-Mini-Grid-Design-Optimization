@@ -22,6 +22,10 @@ export default function Home() {
     siteWattage: '0',
     pricePerPanel: '0',
     pvCost: '0',
+    totalShipmentSize: '0',
+    portionOfPanelsGoingToProject: '0',
+    internationalTransportPerPanel: '0',
+    pvShippingCostForThisProject: '0',
     completed: false,
   })
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -60,6 +64,9 @@ export default function Home() {
     const panelsPerString = parseInt(formData.get('panelsPerString') as string);
     const pricePerWatt = parseFloat(formData.get('pricePerWatt') as string);
 
+    const totalPanelsInShipment = parseInt(formData.get('totalPanelsInShipment') as string);
+    const internationalTransportTotal = parseFloat(formData.get('internationalTransportTotal') as string);
+
     
     const pvSize = (pvSizeInputValue / 1000).toString();
     const batterySize = batterySizeInputValue.toString();
@@ -80,7 +87,12 @@ export default function Home() {
     const pricePerPanel = (panelSize * pricePerWatt).toString()
     const pvCost = (parseInt(numberOfPanels) * parseFloat(pricePerPanel)).toFixed(2).toString()
 
-    
+    const totalShipmentSize = (totalPanelsInShipment * panelSize).toString()
+    const portionOfPanelsGoingToProject =  (parseFloat(siteWattage) * parseInt(totalShipmentSize) / 1000).toFixed(2).toString()
+    const internationalTransportPerPanel = (internationalTransportTotal / totalPanelsInShipment).toFixed(2).toString()
+    const pvShippingCostForThisProject = (parseFloat(internationalTransportPerPanel) * panelsPerString).toFixed(2).toString()
+
+
     
     setTimeout(() => {
       setPriceResults({
@@ -97,6 +109,10 @@ export default function Home() {
         siteWattage,
         pricePerPanel,
         pvCost,
+        totalShipmentSize,
+        portionOfPanelsGoingToProject,
+        internationalTransportPerPanel,
+        pvShippingCostForThisProject,
         completed: true
       });
       setIsLoading(false);
@@ -133,6 +149,10 @@ export default function Home() {
         siteWattage: '0',
         pricePerPanel: '0',
         pvCost: '0',
+        totalShipmentSize: '0',
+        portionOfPanelsGoingToProject: '0',
+        internationalTransportPerPanel: '0',
+        pvShippingCostForThisProject: '0',
         completed: false,
       })
   }
@@ -228,7 +248,7 @@ export default function Home() {
               <section className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] border-thick">
                 <h2 className="font-bold">Team Members and Roles:</h2>
                 <ul className="list-inside list-disc mb-4">
-                  <li>Earth - Back-End Engineer -  Python, SQL, Java, JS, Gen AI Integration</li>
+                  <li>Earth - Full-Stack Engineer -  Python, SQL, Java, JS</li>
                   <li>Pranav - Front-End Engineer - Angular, React, JavaScript, Java, Python, C++, HTML, AWS</li>
                   <li>Kunle - Front-End Engineer - Python, Go, Java, Javascript, React</li>
                 </ul>
@@ -551,6 +571,10 @@ export default function Home() {
                 <p>Site Wattage = {priceResults.siteWattage}</p>
                 <p>Price Per Panel= {priceResults.pricePerPanel}</p>
                 <p>Pv Cost = {priceResults.pvCost}</p>
+                <p>Total Shipment Size = {priceResults.totalShipmentSize}</p>
+                <p>Portion Of Panels Going To Project = {priceResults.portionOfPanelsGoingToProject}</p>
+                <p>International Transport Per Panel = {priceResults.internationalTransportPerPanel}</p>
+                <p>pv Shipping Cost For This Project = {priceResults.pvShippingCostForThisProject}</p>
                 <form className="reset-form" onSubmit={handleResetPrice}>
                   <button type="submit" className="submit-button">Reset</button>
                 </form>
