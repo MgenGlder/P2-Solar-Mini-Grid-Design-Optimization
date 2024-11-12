@@ -67,6 +67,11 @@ export default function Home() {
     const totalPanelsInShipment = parseInt(formData.get('totalPanelsInShipment') as string);
     const internationalTransportTotal = parseFloat(formData.get('internationalTransportTotal') as string);
 
+    const inspectionFee = parseFloat(formData.get('preShippingInspectionFee') as string);
+    const projectRacking = parseInt(formData.get('projectsInShipment') as string);
+    const kesRate = parseFloat(formData.get('kesRate') as string);
+    const VAT = parseFloat(formData.get('vat') as string);
+
     
     const pvSize = (pvSizeInputValue / 1000).toString();
     const batterySize = batterySizeInputValue.toString();
@@ -92,6 +97,29 @@ export default function Home() {
     const internationalTransportPerPanel = (internationalTransportTotal / totalPanelsInShipment).toFixed(2).toString()
     const pvShippingCostForThisProject = (parseFloat(internationalTransportPerPanel) * panelsPerString).toFixed(2).toString()
 
+    //const pvInspectionFee = (inspectionFee * kesRate / projectRacking).toFixed(2).toString()
+    const idfFee = (20 * kesRate).toFixed(2).toString()
+    const customsDocumentationFee = (125 * kesRate).toFixed(2).toString()
+    const clearingFeePerShipment = (parseFloat(idfFee) + parseFloat(customsDocumentationFee)).toFixed(2).toString()
+    const EPRAPermit = (75 * kesRate).toFixed(2).toString()
+
+    // calc total cost for 20' container
+    const thcHandlingCleaningFee20ft = parseInt(formData.get('thcHandlingCleaningFee20ft') as string);
+    const shorehandling20ft = parseInt(formData.get('shorehandling20ft') as string);
+    const wharfage20ft = parseInt(formData.get('wharfage20ft') as string);
+    const freightMovementNairobi20ft = parseInt(formData.get('freightMovementNairobi20ft') as string);
+    const kpaPortVerificationCharge20ft = parseInt(formData.get('kpaPortVerificationCharge20ft') as string);
+    const kpaFeesReturning20ft = (250 * kesRate)
+    const totalCost20ft = (kesRate * (thcHandlingCleaningFee20ft + shorehandling20ft + wharfage20ft + freightMovementNairobi20ft + kpaPortVerificationCharge20ft + kpaFeesReturning20ft) * (1 + VAT)).toFixed(2).toString()
+
+    // calc total cost for 40' container
+    const thcHandlingCleaningFee40ft = parseInt(formData.get('thcHandlingCleaningFee40ft') as string);
+    const shorehandling40ft = parseInt(formData.get('shorehandling40ft') as string);
+    const wharfage40ft = parseInt(formData.get('wharfage40ft') as string);
+    const freightMovementNairobi40ft = parseInt(formData.get('freightMovementNairobi40ft') as string);
+    const kpaPortVerificationCharge40ft = parseInt(formData.get('kpaPortVerificationCharge40ft') as string);
+    const kpaFeesReturning40ft = (350 * kesRate)
+    const totalCost40ft = (kesRate * (thcHandlingCleaningFee40ft + shorehandling40ft + wharfage40ft + freightMovementNairobi40ft + kpaPortVerificationCharge40ft + kpaFeesReturning40ft) * (1 + VAT)).toFixed(2).toString()
 
     
     setTimeout(() => {
